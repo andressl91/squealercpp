@@ -3,12 +3,15 @@
 #include "database.h"
 #include "connection.h"
 
-static int callback(void *data, int argc, char **argv, char **azColName) {
+static int callback(void *data, int argc, char **argv, char **ColName) {
     int i;
-    std::cout << "We are in the callback";
+    std::cout << "We are in the callback: \n";
+    
+    //std::cout << *data << std::endl;
     for (i=0; i < argc; i++) {
-        std::cout << azColName[i] << " " <<argv[i] << std::endl;
+        std::cout << ColName[i] << " " <<argv[i] << std::endl;
     }
+    std::cout << "END OF CALLBACK \n";
     return 0;
 
 }
@@ -21,14 +24,21 @@ DataBase::DataBase(std::string db_path): con(db_path)
 
 void DataBase::fetchTables() {
 
-    char *zErrMsg = 0;
+    char *ErrMsg = 0;
     int rc;
     const char* data = "Callback function called for fetchTables";
     char * sql = "SELECT name FROM sqlite_master where type='table'";
     
-    int exit = 0; 
-    exit = sqlite3_open("example.db", &con.DB); 
-    rc = sqlite3_exec(con.DB, sql, callback, (void*)data, &zErrMsg);
+    int exit = sqlite3_open("example.db", &con.DB); 
+    rc = sqlite3_exec(con.DB, sql, callback, (void*)data, &ErrMsg);
+
+  if (exit != SQLITE_OK) { 
+    std::cerr << "Error Insert" << std::endl; 
+    sqlite3_free(ErrMsg); 
+    } 
+    else
+        std::cout << "Records created Successfully!" << std::endl; 
+
     sqlite3_close(con.DB); 
 }
 
