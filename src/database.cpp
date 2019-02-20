@@ -21,7 +21,15 @@ DataBase::DataBase(std::string db_path): con(db_path)
 
 void DataBase::fetchTables() {
 
-    std::string sql = "SELECT name FROM sqlite_master where type='table'";
+    char *zErrMsg = 0;
+    int rc;
+    const char* data = "Callback function called for fetchTables";
+    char * sql = "SELECT name FROM sqlite_master where type='table'";
+    
+    int exit = 0; 
+    exit = sqlite3_open("example.db", &con.DB); 
+    rc = sqlite3_exec(con.DB, sql, callback, (void*)data, &zErrMsg);
+    sqlite3_close(con.DB); 
 }
 
 void DataBase::createTable() {

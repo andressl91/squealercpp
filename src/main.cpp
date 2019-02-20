@@ -8,8 +8,9 @@ int main() {
 
     DataBase database(name);
     //database.createTable();
-    database.insert();
+    //database.insert();
     //database.select();
+    database.fetchTables();
 
    /*
    Connection con(name);
