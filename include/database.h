@@ -16,6 +16,7 @@ class DataBase {
     void fetchTables();
     void createTable();
     void select();
+    void insert();
 
 };
 
