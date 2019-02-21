@@ -12,7 +12,9 @@ int main() {
     //database.select();
     //database.fetchTables();
     char * sql = "SELECT * from COMPANY";
-    database.select_stmt(sql);
+    Records records;
+    records = database.select_stmt(sql);
+    std::cerr << records.size() << " records returned. \n";
 
    /*
    Connection con(name);

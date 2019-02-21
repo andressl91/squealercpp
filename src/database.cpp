@@ -22,8 +22,13 @@ int select_callback(void *p_data, int num_fields, char **p_fields, char **p_col_
     try {
         records->emplace_back(p_fields, p_fields + num_fields);
     }
+
     catch (...){
         return 1;
+    }
+
+    for (int i = 0; i < num_fields; i++) {
+        std::cout <<  p_col_names[i] << " " <<  p_fields[i] << "\n"; 
     }
     return 0;
 }
@@ -97,7 +102,7 @@ void DataBase::select() {
     sqlite3_close(con.DB); 
 }
 
-void DataBase::select_stmt(const char* stmt) {
+Records DataBase::select_stmt(const char* stmt) {
     Records records;
     int exit;
     char *errmsg;
@@ -111,6 +116,7 @@ void DataBase::select_stmt(const char* stmt) {
         std::cerr << records.size() << " records returned. \n";
     }
     sqlite3_close(con.DB); 
+    return records;
 }
 /*    
     std::string sql = "DROP TABLE IF EXISTS PERSON;"

@@ -20,7 +20,7 @@ class DataBase {
     void createTable();
     void select();
     void insert();
-    void select_stmt(const char* stmt);
+    Records select_stmt(const char* stmt);
 
 };
 
