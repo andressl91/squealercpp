@@ -10,7 +10,9 @@ int main() {
     //database.createTable();
     //database.insert();
     //database.select();
-    database.fetchTables();
+    //database.fetchTables();
+    char * sql = "SELECT * from COMPANY";
+    database.select_stmt(sql);
 
    /*
    Connection con(name);

@@ -3,8 +3,11 @@
 
 #include <string>
 #include <sqlite3.h>
+#include <vector>
 #include "connection.h"
 
+using Record = std::vector<std::string>;
+using Records = std::vector<Record>;
 
 class DataBase {
     private:
@@ -17,6 +20,7 @@ class DataBase {
     void createTable();
     void select();
     void insert();
+    void select_stmt(const char* stmt);
 
 };
 
