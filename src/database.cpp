@@ -131,3 +131,19 @@ Records DataBase::select_stmt(const char* stmt) {
     sqlite3_close(con.DB); 
     return records;
 }
+
+void DataBase::deleteme() {
+    std::map<std::string, Table> test_map; 
+    Table test_table;
+    test_table.name = "HOla";
+    
+    test_map.insert(key_val("test", test_table));
+
+    Table key = test_map.find("test")->second;
+
+    std::cout << key.name << std::endl;
+
+
+}
+
+
