@@ -12,9 +12,9 @@ include_directories(include)
 add_library(libsquealer STATIC src/database.cpp src/connection.cpp)
 target_compile_options(libsquealer PUBLIC -Wall -lsqlite3)
 
-add_executable(hola src/main.cpp)
-target_link_libraries(hola libsquealer sqlite3)
-target_include_directories(hola PRIVATE {SQLITE_INDLUCE_DIR})
+add_executable(squeal src/main.cpp)
+target_link_libraries(squeal libsquealer sqlite3)
+target_include_directories(squeal PRIVATE {SQLITE_INDLUCE_DIR})
 
 # tests
 enable_testing()

@@ -3,6 +3,13 @@
 #include "database.h"
 #include "connection.h"
 
+template <typename T>
+void printRecords(std::vector<T> v) {
+    for(int i=0; i != v.size() ; i++) {
+        std::cout << v.at(i) << " ";
+            }
+    std::cout << std::endl;
+}
 
 static int callback(void *data, int argc, char **argv, char **ColName) {
     int i;
@@ -43,19 +50,25 @@ DataBase::DataBase(std::string db_path): con(db_path)
 void DataBase::fetchTables() {
 
     char *ErrMsg = 0;
-    int rc;
-    const char* data = "Callback function called for fetchTables";
     char * sql = "SELECT name FROM sqlite_master where type='table'";
     
     int exit = sqlite3_open("example.db", &con.DB); 
-    rc = sqlite3_exec(con.DB, sql, callback, (void*)data, &ErrMsg);
+    //ORIGINAL WORKS
+    //int rc = sqlite3_exec(con.DB, sql, callback, NULL, &ErrMsg);
+    // TEST
+    Records records;
+    char *errmsg;
+    // sql is stmt
+    exit = sqlite3_open("example.db", &con.DB); 
+    int ret = sqlite3_exec(con.DB, sql, select_callback, &records, &errmsg);
 
+    //
   if (exit != SQLITE_OK) { 
     std::cerr << "Error Insert" << std::endl; 
     sqlite3_free(ErrMsg); 
     } 
     else
-        std::cout << "Records created Successfully!" << std::endl; 
+        std::cout << "Fetch tablese successfully!" << std::endl; 
 
     sqlite3_close(con.DB); 
 }
@@ -118,13 +131,3 @@ Records DataBase::select_stmt(const char* stmt) {
     sqlite3_close(con.DB); 
     return records;
 }
-/*    
-    std::string sql = "DROP TABLE IF EXISTS PERSON;"
-                      "CREATE TABLE PERSON("
-                      "ID INT PRIMARY KEY     NOT NULL, "
-                      "NAME           TEXT    NOT NULL, "
-                      "SURNAME          TEXT     NOT NULL, "
-                      "AGE            INT     NOT NULL, "
-                      "ADDRESS        CHAR(50), "
-                      "SALARY         REAL );"; 
-    con.query(sql);*/
