@@ -10,7 +10,7 @@ int main() {
     //database.createTable();
     //database.insert();
     //database.select();
-    //database.fetchTables();
+    database.fetchTables();
     database.deleteme();
     //char * sql = "SELECT * from COMPANY";
     //Records records;

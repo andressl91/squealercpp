@@ -54,13 +54,14 @@ void DataBase::fetchTables() {
     
     int exit = sqlite3_open("example.db", &con.DB); 
     //ORIGINAL WORKS
-    //int rc = sqlite3_exec(con.DB, sql, callback, NULL, &ErrMsg);
+    //TODO make callback with map
+    int rc = sqlite3_exec(con.DB, sql, callback, NULL, &ErrMsg);
     // TEST
-    Records records;
-    char *errmsg;
+    //Records records;
+    //char *errmsg;
     // sql is stmt
-    exit = sqlite3_open("example.db", &con.DB); 
-    int ret = sqlite3_exec(con.DB, sql, select_callback, &records, &errmsg);
+   // exit = sqlite3_open("example.db", &con.DB); 
+ //   int ret = sqlite3_exec(con.DB, sql, select_callback, &records, &errmsg);
 
     //
   if (exit != SQLITE_OK) { 
@@ -71,6 +72,9 @@ void DataBase::fetchTables() {
         std::cout << "Fetch tablese successfully!" << std::endl; 
 
     sqlite3_close(con.DB); 
+
+    //std::cout << records.at(0) << std::endl;
+
 }
 
 void DataBase::createTable() {
