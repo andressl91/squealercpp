@@ -11,11 +11,13 @@
 using Record = std::vector<std::string>;
 using Records = std::vector<Record>;
 using key_val = std::pair<std::string, Table>;
+using Tables = std::map<std::string, Table>;
 
 
 class DataBase {
     private:
     Connection con;
+    Tables tables;
     
 
 
@@ -26,7 +28,6 @@ class DataBase {
     void select();
     void insert();
     Records select_stmt(const char* stmt);
-    void deleteme();
 
 };
 

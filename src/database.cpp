@@ -40,6 +40,28 @@ int select_callback(void *p_data, int num_fields, char **p_fields, char **p_col_
     return 0;
 }
 
+int map_callback(void *p_data, int num_fields, char **p_fields, char **p_col_names) {
+
+    for (int i = 0; i < num_fields; i++) {
+        std::cout <<  p_col_names[i] << " " <<  p_fields[i] << "\n"; 
+    }
+
+
+
+    Tables* tbs = static_cast<Tables*>(p_data);
+    //Table t1;
+    //t1.name = "Damn";
+    //tbs->insert(key_val("test", t1));
+    
+    for (int i = 0; i < num_fields; i++) {
+            p_fields[i];
+            std::string s = std::string(p_fields[i]);
+           // std::cout << s << std::endl;
+           tbs->insert(key_val(s, Table(s))); 
+    }
+    return 0;
+}
+
 
 
 DataBase::DataBase(std::string db_path): con(db_path)
@@ -53,17 +75,17 @@ void DataBase::fetchTables() {
     char * sql = "SELECT name FROM sqlite_master where type='table'";
     
     int exit = sqlite3_open("example.db", &con.DB); 
-    //ORIGINAL WORKS
-    //TODO make callback with map
-    int rc = sqlite3_exec(con.DB, sql, callback, NULL, &ErrMsg);
-    // TEST
-    //Records records;
-    //char *errmsg;
-    // sql is stmt
-   // exit = sqlite3_open("example.db", &con.DB); 
- //   int ret = sqlite3_exec(con.DB, sql, select_callback, &records, &errmsg);
+    char *errmsg;
+    // WORKS DAMN
+    int rc = sqlite3_exec(con.DB, sql, map_callback, &tables ,&errmsg);
+    
+    Tables::iterator itr;
 
-    //
+    for(itr =tables.begin(); itr!= tables.end(); itr++){
+    std::cout << itr->first << " " << itr->second.table_name  << std::endl;
+    }
+
+
   if (exit != SQLITE_OK) { 
     std::cerr << "Error Insert" << std::endl; 
     sqlite3_free(ErrMsg); 
@@ -73,7 +95,6 @@ void DataBase::fetchTables() {
 
     sqlite3_close(con.DB); 
 
-    //std::cout << records.at(0) << std::endl;
 
 }
 
@@ -136,18 +157,5 @@ Records DataBase::select_stmt(const char* stmt) {
     return records;
 }
 
-void DataBase::deleteme() {
-    std::map<std::string, Table> test_map; 
-    Table test_table;
-    test_table.name = "HOla";
-    
-    test_map.insert(key_val("test", test_table));
-
-    Table key = test_map.find("test")->second;
-
-    std::cout << key.name << std::endl;
-
-
-}
 
 

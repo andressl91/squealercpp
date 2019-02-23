@@ -11,7 +11,7 @@ int main() {
     //database.insert();
     //database.select();
     database.fetchTables();
-    database.deleteme();
+    //database.deleteme();
     //char * sql = "SELECT * from COMPANY";
     //Records records;
     //records = database.select_stmt(sql);

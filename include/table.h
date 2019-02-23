@@ -1,11 +1,17 @@
 #ifndef TABLE
 #define TABLE
 #include <string>
+#include <map>
 
-struct Table {
-    std::string name;
+
+class Table {
+    public:
+    std::string table_name;
+    Table();
+    Table(std::string);
 
 };
+
 
 #endif
 
