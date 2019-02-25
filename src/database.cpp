@@ -45,7 +45,7 @@ void DataBase::fetchTables() {
     sqlite3_free(ErrMsg); 
     } 
     else
-        std::cout << "Fetch tablese successfully!" << std::endl; 
+    {}
 
     sqlite3_close(con.DB); 
 }

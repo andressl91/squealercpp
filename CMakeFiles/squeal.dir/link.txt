@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/squeal.dir/src/main.cpp.o  -o squeal liblibsquealer.a -lsqlite3 

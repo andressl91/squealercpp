@@ -4,6 +4,19 @@
 #include <string>
 #include "table.h"
 #include "database.h"
+#include "sqltypes.h"
+
+
+BOOST_AUTO_TEST_CASE(sqltypes) {
+    SqlType sqltype; 
+    BOOST_CHECK(sqltype.NONE == "NONE");
+    BOOST_CHECK(sqltype.INTEGER == "INTEGER");
+    BOOST_CHECK(sqltype.FLOAT == "FLOAT");
+    BOOST_CHECK(sqltype.TEXT == "TEXT");
+    BOOST_CHECK(sqltype.BLOB == "BLOB");
+
+
+}
 
 BOOST_AUTO_TEST_CASE(fetchtables) {
 
@@ -21,10 +34,13 @@ BOOST_AUTO_TEST_CASE(fetchtables) {
 
     Table tbl = tbl_find->second;
     BOOST_CHECK_EQUAL(tbl.table_name, "COMPANY");
+}
 
-
+BOOST_AUTO_TEST_CASE(createTable){
+//TODO: Implement createTable, check src/backup, use SqlType struct;
 
 }
+
 
 
 BOOST_AUTO_TEST_CASE(table) {

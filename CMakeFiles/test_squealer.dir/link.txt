@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/test_squealer.dir/tests/main.cpp.o  -o test_squealer liblibsquealer.a /usr/lib/libboost_unit_test_framework.a -lsqlite3 

@@ -1,0 +1,2 @@
+/usr/bin/ar qc liblibsquealer.a  CMakeFiles/libsquealer.dir/src/database.cpp.o CMakeFiles/libsquealer.dir/src/connection.cpp.o CMakeFiles/libsquealer.dir/src/table.cpp.o CMakeFiles/libsquealer.dir/src/sqltypes.cpp.o
+/usr/bin/ranlib liblibsquealer.a
