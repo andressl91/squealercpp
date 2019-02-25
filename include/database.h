@@ -17,17 +17,19 @@ using Tables = std::map<std::string, Table>;
 class DataBase {
     private:
     Connection con;
-    Tables tables;
     
 
 
     public:
+    std::string dbPath;
+    Tables tables;
+
     DataBase(std::string);
     void fetchTables();
     void createTable();
-    void select();
-    void insert();
-    Records select_stmt(const char* stmt);
+    //void select();
+    //void insert();
+    //Records select_stmt(const char* stmt);
 
 };
 

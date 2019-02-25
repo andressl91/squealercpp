@@ -8,8 +8,14 @@ int main() {
 
     DataBase database(name);
     //database.createTable();
-    database.insert();
+    //database.insert();
     //database.select();
+    database.fetchTables();
+    //database.deleteme();
+    //char * sql = "SELECT * from COMPANY";
+    //Records records;
+    //records = database.select_stmt(sql);
+    //std::cerr << records.size() << " records returned. \n";
 
    /*
    Connection con(name);

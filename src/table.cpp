@@ -1,5 +1,8 @@
-Table::Table(std::string name) {
-    table_name = table_name
+#include "table.h"
+
+Table::Table(std::string name) 
+    : table_name(name)
+{
     
 }
 Table::Table() {

@@ -9,7 +9,7 @@ find_library(sqlite3 NAMES sqlite3 PATHS ${SQLITE_LIB_DIR})
 set(SQLITE_INDLUCE_DIR /usr/include)
 
 include_directories(include)
-add_library(libsquealer STATIC src/database.cpp src/connection.cpp)
+add_library(libsquealer STATIC src/database.cpp src/connection.cpp src/table.cpp)
 target_compile_options(libsquealer PUBLIC -Wall -lsqlite3)
 
 add_executable(squeal src/main.cpp)
@@ -18,9 +18,9 @@ target_include_directories(squeal PRIVATE {SQLITE_INDLUCE_DIR})
 
 # tests
 enable_testing()
-add_executable(squealercpp_tests tests/main.cpp)
-target_link_libraries(squealercpp_tests libsquealer Boost::unit_test_framework)
-add_test(squealercpp_tests squealercpp_tests)
+add_executable(test_squealer tests/main.cpp)
+target_link_libraries(test_squealer libsquealer Boost::unit_test_framework sqlite3)
+add_test(test_squealer test_squealer)
 
 
 
