@@ -1,4 +1,4 @@
-import table
+import sql_database as tb
 
-t = table.Table("Test")
+t = tb.Table("Test")
 print(t.table_name)

@@ -4,7 +4,8 @@
 
 namespace py = pybind11;
 
-PYBIND11_MODULE(table, m) {                             
+PYBIND11_MODULE(sql_database, m) {
+//PYBIND11_MODULE(table, m) {                             
      py::class_<Table>(m, "Table")
      .def(py::init<>())
      .def(py::init<std::string>())
