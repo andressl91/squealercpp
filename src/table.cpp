@@ -5,6 +5,7 @@ Table::Table(std::string name)
 {
     
 }
+
 Table::Table() {
-    
+
 }

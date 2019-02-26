@@ -9,5 +9,6 @@ int main() {
     DataBase database(name);
     //database.createTable();
     database.fetchTables();
+    std::cout << "HERE";
     return 0;
 }

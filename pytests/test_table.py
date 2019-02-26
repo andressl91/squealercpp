@@ -1,0 +1,4 @@
+#MAKE SURE PYTHONPATH IS SET!
+import table
+
+
