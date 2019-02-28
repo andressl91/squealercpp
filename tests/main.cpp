@@ -18,7 +18,7 @@ BOOST_AUTO_TEST_CASE(sqltypes) {
 
 }
 
-BOOST_AUTO_TEST_CASE(createTable){
+BOOST_AUTO_TEST_CASE(TableOperations){
     string_map feat;
     SqlType s_typ;
         
@@ -46,6 +46,5 @@ BOOST_AUTO_TEST_CASE(createTable){
 BOOST_AUTO_TEST_CASE(table) {
     Table tabl = Table("test");
     BOOST_CHECK_EQUAL(tabl.table_name, "test");
-    BOOST_CHECK_EQUAL(1 + 1, 2);
 }
 
