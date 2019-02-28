@@ -6,13 +6,10 @@
 
 
 class Connection {
-    private:
-
-    std::string db_path;
-
     public:
+    std::string db_path;
     sqlite3 *DB;
-    Connection(std::string db_path);
+    Connection(std::string sql_db_path);
     void query(std::string sql);
     void openDB();
     void closeDB();

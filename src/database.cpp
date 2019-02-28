@@ -32,8 +32,8 @@ DataBase::DataBase(std::string db_path)
 void DataBase::fetchTables() {
     char *ErrMsg = 0;
     char * sql = "SELECT name FROM sqlite_master where type='table'";
-    
-    int exit = sqlite3_open("example.db", &con.DB); 
+   
+    int exit = sqlite3_open(con.db_path.c_str(), &con.DB); 
     char *errmsg;
     int rc = sqlite3_exec(con.DB, sql, map_callback, &tables ,&errmsg);
     

@@ -18,14 +18,19 @@ BOOST_AUTO_TEST_CASE(sqltypes) {
 
 }
 
-BOOST_AUTO_TEST_CASE(fetchtables) {
-
-    std::string name = "example.db";
+BOOST_AUTO_TEST_CASE(createTable){
+    string_map feat;
+    SqlType s_typ;
+        
+   std::string name = "createtable.db";
+    feat["ID"] = s_typ.INTEGER;
+    feat["NAME"] = s_typ.TEXT;
+    std::string table_n = "COMPANY";
 
     DataBase database(name);
-    BOOST_CHECK(database.dbPath == "example.db");
-
+    BOOST_CHECK(database.dbPath == "createtable.db");
     BOOST_CHECK(database.tables.size() == 0);
+    database.createTable(table_n, feat);
     database.fetchTables();
     BOOST_CHECK(database.tables.size() == 1);
     BOOST_CHECK(database.tables.count("COMPANY") == 1);
@@ -34,11 +39,6 @@ BOOST_AUTO_TEST_CASE(fetchtables) {
 
     Table tbl = tbl_find->second;
     BOOST_CHECK_EQUAL(tbl.table_name, "COMPANY");
-}
-
-BOOST_AUTO_TEST_CASE(createTable){
-//TODO: Implement createTable, check src/backup, use SqlType struct;
-
 }
 
 

@@ -1,9 +1,8 @@
 #include "connection.h"
 #include <iostream>
 
-Connection::Connection(std::string db_path) {
-    db_path = db_path;    
-}
+Connection::Connection(std::string sql_db_path) 
+ : db_path(sql_db_path){}
 
 void Connection::openDB() {
     
@@ -24,7 +23,6 @@ void Connection::openDB() {
 }
 
 
-
 void Connection::closeDB() {
     sqlite3_close(DB);
 }
@@ -32,29 +30,17 @@ void Connection::closeDB() {
 
 void Connection::query(std::string sql) {
 
-
-//    "DROP TABLE IF EXISTS STUDENTS;"
-/*
-    std::string sql = "CREATE TABLE PERSON("
-                      "ID INT PRIMARY KEY     NOT NULL, "
-                      "NAME           TEXT    NOT NULL, "
-                      "SURNAME          TEXT     NOT NULL, "
-                      "AGE            INT     NOT NULL, "
-                      "ADDRESS        CHAR(50), "
-                      "SALARY         REAL );"; 
-   
-    */
     int exit = 0; 
-    exit = sqlite3_open("example.db", &DB); 
+    exit = sqlite3_open(db_path.c_str(), &DB); 
     char* messaggeError; 
     exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &messaggeError); 
   
     if (exit != SQLITE_OK) { 
-        std::cerr << "Error Create Table" << std::endl; 
+        std::cerr << "Error excecuting query" << sql <<std::endl; 
         sqlite3_free(messaggeError); 
     } 
     else
-        std::cout << "Table created Successfully" << std::endl; 
+        std::cout << "Query Successfull" << std::endl; 
     sqlite3_close(DB); 
 
 }
