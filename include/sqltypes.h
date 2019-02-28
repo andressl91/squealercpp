@@ -9,6 +9,9 @@ struct SqlType {
     const std::string FLOAT = "FLOAT";
     const std::string TEXT = "TEXT";
     const std::string BLOB = "BLOB";
+
+    const std::string NOT_NULL = "NOT NULL";
+    const std::string PRIMARY_KEY = "PRIMARY KEY";
 };
 
 

@@ -53,7 +53,7 @@ void DataBase::fetchTables() {
 void DataBase::createTable(std::string table_name, string_map features) {
 
     
-    std::string sql = "DROP TABLE IF EXISTS " + table_name;
+    std::string sql = "DROP TABLE IF EXISTS " + table_name + "; ";
 
     sql += "CREATE TABLE " + table_name + "(";
         
@@ -61,23 +61,15 @@ void DataBase::createTable(std::string table_name, string_map features) {
     string_map::iterator itr;
     //Only insert until second last, as last map requires special treatment
     for(itr = features.begin(); itr != --features.end(); itr++) {
-        std::cout << itr->first << " " << itr->second << ", " << std::endl;
-        //itr->first + " " + itr->second + ",gt "
+        sql += itr->first + " " + itr->second + ", ";
     }
    
     //itr is now last element
-    std::cout << itr->first << " " << itr->second << std::endl;
+    sql += itr->first + " " + itr->second + " ); ";
 
+    //std::cout << sql << std::endl;
 
-    std::string sql_real = "DROP TABLE IF EXISTS COMPANY;"
-                      "CREATE TABLE COMPANY("
-                      "ID INT PRIMARY KEY     NOT NULL, "
-                      "NAME           TEXT    NOT NULL, "
-                      "SURNAME          TEXT     NOT NULL, "
-                      "AGE            INT     NOT NULL, "
-                      "ADDRESS        CHAR(50), "
-                      "SALARY         REAL );"; 
-    //con.query(sql);
+    con.query(sql);
 
 }
 

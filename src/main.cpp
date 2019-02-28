@@ -1,5 +1,6 @@
 #include <iostream>
 #include "database.h"
+#include "sqltypes.h"
 
 
 
@@ -9,8 +10,10 @@ int main() {
 
     string_map feat;
 
-    feat["ID"] = "INT";
-    feat["NAME"] = "TEXT";
+    SqlType s_typ;
+        
+    feat["ID"] = s_typ.INTEGER;
+    feat["NAME"] = s_typ.TEXT;
     std::string table_n = "COMPANY";
 
     DataBase database(name);
