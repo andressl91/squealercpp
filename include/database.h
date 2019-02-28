@@ -12,6 +12,7 @@ using Record = std::vector<std::string>;
 using Records = std::vector<Record>;
 using key_val = std::pair<std::string, Table>;
 using Tables = std::map<std::string, Table>;
+using string_map = std::map<std::string, std::string>;
 
 
 class DataBase {
@@ -26,7 +27,7 @@ class DataBase {
 
     DataBase(std::string);
     void fetchTables();
-    void createTable();
+    void createTable(std::string table_name, string_map featues) ;
     //void select();
     //void insert();
     //Records select_stmt(const char* stmt);

@@ -50,9 +50,26 @@ void DataBase::fetchTables() {
     sqlite3_close(con.DB); 
 }
 
-void DataBase::createTable() {
+void DataBase::createTable(std::string table_name, string_map features) {
+
     
-    std::string sql = "DROP TABLE IF EXISTS COMPANY;"
+    std::string sql = "DROP TABLE IF EXISTS " + table_name;
+
+    sql += "CREATE TABLE " + table_name + "(";
+        
+    
+    string_map::iterator itr;
+    //Only insert until second last, as last map requires special treatment
+    for(itr = features.begin(); itr != --features.end(); itr++) {
+        std::cout << itr->first << " " << itr->second << ", " << std::endl;
+        //itr->first + " " + itr->second + ",gt "
+    }
+   
+    //itr is now last element
+    std::cout << itr->first << " " << itr->second << std::endl;
+
+
+    std::string sql_real = "DROP TABLE IF EXISTS COMPANY;"
                       "CREATE TABLE COMPANY("
                       "ID INT PRIMARY KEY     NOT NULL, "
                       "NAME           TEXT    NOT NULL, "
@@ -60,7 +77,7 @@ void DataBase::createTable() {
                       "AGE            INT     NOT NULL, "
                       "ADDRESS        CHAR(50), "
                       "SALARY         REAL );"; 
-    con.query(sql);
+    //con.query(sql);
 
 }
 
