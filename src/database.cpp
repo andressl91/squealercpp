@@ -26,12 +26,10 @@ int map_callback(void *p_data, int num_fields, char **p_fields, char **p_col_nam
 }
 
 
-
 DataBase::DataBase(std::string db_path)
     : con(db_path), dbPath(db_path) {}
 
 void DataBase::fetchTables() {
-
     char *ErrMsg = 0;
     char * sql = "SELECT name FROM sqlite_master where type='table'";
     
@@ -39,7 +37,6 @@ void DataBase::fetchTables() {
     char *errmsg;
     int rc = sqlite3_exec(con.DB, sql, map_callback, &tables ,&errmsg);
     
-
   if (exit != SQLITE_OK) { 
     std::cerr << "Error Insert" << std::endl; 
     sqlite3_free(ErrMsg); 
@@ -54,23 +51,18 @@ void DataBase::createTable(std::string table_name, string_map features) {
 
     
     std::string sql = "DROP TABLE IF EXISTS " + table_name + "; ";
-
     sql += "CREATE TABLE " + table_name + "(";
-        
     
     string_map::iterator itr;
     //Only insert until second last, as last map requires special treatment
     for(itr = features.begin(); itr != --features.end(); itr++) {
         sql += itr->first + " " + itr->second + ", ";
     }
-   
     //itr is now last element
     sql += itr->first + " " + itr->second + " ); ";
 
     //std::cout << sql << std::endl;
-
     con.query(sql);
-
 }
 
 
