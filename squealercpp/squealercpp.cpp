@@ -1,4 +1,6 @@
 #include <pybind11.h>
+#include <stl.h>
+
 #include "table.h"
 #include "database.h"
 #include "connection.h"
@@ -15,7 +17,9 @@ PYBIND11_MODULE(sql_database, m) {
 
    py::class_<DataBase>(m, "DataBase")
     .def(py::init<std::string>())
-    .def_readwrite("db_path", &DataBase::dbPath);
+    .def_readwrite("db_path", &DataBase::dbPath)
+    .def_readwrite("tables", &DataBase::tables)
+    .def("fetch_tables", &DataBase::fetchTables);
 
    py::class_<Connection>(m, "Connection")
     .def(py::init<std::string>())

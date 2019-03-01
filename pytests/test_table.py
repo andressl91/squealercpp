@@ -12,8 +12,15 @@ def test_database():
     db = DataBase("example.db")
     assert db.db_path == "example.db"
 
+    db.fetch_tables()
+    print(db.tables)
+    print(db.tables["COMPANY"].table_name)
+
 def connection():
 
     con = Connection("test.db")
     assert con.db_path == "test.db"
     #pass
+
+if __name__ == "__main__":
+    test_database()
