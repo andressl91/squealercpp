@@ -63,6 +63,8 @@ void DataBase::createTable(std::string table_name, string_map features) {
 
     //std::cout << sql << std::endl;
     con.query(sql);
+    fetchTables();
+
 }
 
 

@@ -12,9 +12,14 @@ def test_database():
     db = DataBase("example.db")
     assert db.db_path == "example.db"
 
-    db.fetch_tables()
-    print(db.tables)
-    print(db.tables["COMPANY"].table_name)
+    #db.fetch_tables()
+    
+    feat = {"ID": "INT"}
+    db.create_table("COMPANY", feat)
+    assert len(db.tables) == 1
+    assert list(db.tables) == ["COMPANY"]
+    assert db.tables["COMPANY"].table_name == "COMPANY"
+
 
 def connection():
 

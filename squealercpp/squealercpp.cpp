@@ -19,7 +19,8 @@ PYBIND11_MODULE(sql_database, m) {
     .def(py::init<std::string>())
     .def_readwrite("db_path", &DataBase::dbPath)
     .def_readwrite("tables", &DataBase::tables)
-    .def("fetch_tables", &DataBase::fetchTables);
+    .def("fetch_tables", &DataBase::fetchTables)
+    .def("create_table", &DataBase::createTable);
 
    py::class_<Connection>(m, "Connection")
     .def(py::init<std::string>())
