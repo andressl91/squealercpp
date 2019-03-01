@@ -16,15 +16,26 @@ void printRecords(std::vector<T> v) {
 
 int map_callback(void *p_data, int num_fields, char **p_fields, char **p_col_names) {
 
-    Tables* tbs = static_cast<Tables*>(p_data);
+    //Tables* tbs = static_cast<Tables*>(p_data);
     for (int i = 0; i < num_fields; i++) {
             //std::cout <<  p_col_names[i] << " " <<  p_fields[i] << "\n"; 
             std::string s = std::string(p_fields[i]);
-           tbs->insert(key_val(s, Table(s))); 
+           //tbs->insert(key_val(s, Table(s))); 
     }
     return 0;
 }
 
+int map_buildDB(void *p_data, int num_fields, char **p_fields, char **p_col_names) {
+
+    //Tables* tbs = static_cast<Tables*>(p_data);
+    std::cout << "HERE \n"; 
+    for (int i = 0; i < num_fields; i++) {
+            std::cout <<  p_col_names[i] << " " <<  p_fields[i] << "\n"; 
+            //std::string s = std::string(p_fields[i]);
+           //tbs->insert(key_val(s, Table(s))); 
+    }
+    return 0;
+}
 
 DataBase::DataBase(std::string db_path)
     : con(db_path), dbPath(db_path) {}
@@ -46,6 +57,25 @@ void DataBase::fetchTables() {
 
     sqlite3_close(con.DB); 
 }
+
+void DataBase::buildDB() {
+    char *ErrMsg = 0;
+    char * sql = "PRAGMA table_info(STUDENT)";
+   
+    int exit = sqlite3_open(con.db_path.c_str(), &con.DB); 
+    char *errmsg;
+    int rc = sqlite3_exec(con.DB, sql, map_buildDB, &tables ,&errmsg);
+    
+  if (exit != SQLITE_OK) { 
+    std::cerr << "Error Insert" << std::endl; 
+    sqlite3_free(ErrMsg); 
+    } 
+    else
+    {}
+
+    sqlite3_close(con.DB); 
+}
+
 
 void DataBase::createTable(std::string table_name, string_map features) {
 

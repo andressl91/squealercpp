@@ -5,7 +5,7 @@
 
 
 int main() {
-   std::string name = "student.db";
+   std::string name = "example.db";
 
 
     string_map feat;
@@ -17,7 +17,8 @@ int main() {
     std::string table_n = "COMPANY";
 
     DataBase database(name);
-    database.createTable(table_n, feat);
+    database.buildDB();
+    //database.createTable(table_n, feat);
     //database.fetchTables();
     return 0;
 }

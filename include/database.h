@@ -28,6 +28,7 @@ class DataBase {
     DataBase(std::string);
     void fetchTables();
     void createTable(std::string table_name, string_map featues) ;
+    void buildDB();
     //void select();
     //void insert();
     //Records select_stmt(const char* stmt);
