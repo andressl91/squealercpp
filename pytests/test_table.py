@@ -1,5 +1,5 @@
 #MAKE SURE PYTHONPATH IS SET!
-from squealercpp.sql_database import Table, DataBase
+from squealercpp.sql_database import Table, Connection
 
 
 def test_table():
@@ -8,6 +8,8 @@ def test_table():
     assert table.table_name == "example.db"
 
 def test_database():
-    pass
     #db = DataBase("example.db")
     #assert db.db_path == "example.db"
+
+def connection():
+    pass

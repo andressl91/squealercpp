@@ -1,5 +1,6 @@
 #include "connection.h"
 #include <iostream>
+#include <sqlite3.h>
 
 Connection::Connection(std::string sql_db_path) 
  : db_path(sql_db_path){}
@@ -14,7 +15,8 @@ void Connection::openDB() {
 
   if (rc != SQLITE_OK) {
 
-    sqlite3_close(DB);
+    //sqlite3_close(DB);
+    //con
     //return 1;
 
   } else {
