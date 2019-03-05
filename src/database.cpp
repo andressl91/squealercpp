@@ -62,7 +62,7 @@ void DataBase::fetchTables() {
     sqlite3_close(con.DB); 
 }
 
-void DataBase::fetchTableInfo() {
+void DataBase::fetchTableInfo(std::string table_name) {
     con.openDB();
     int rc = 0;
     //stmt must be unique

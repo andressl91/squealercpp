@@ -19,8 +19,8 @@ int main() {
 
     DataBase database(name);
     //database.fetchTables();
-    database.createTable(table_n, feat);
-    database.fetchTableInfo();
+    //database.createTable(table_n, feat);
+    //database.fetchTableInfo(table_n);
     //database.deleteME();
     return 0;
 }
