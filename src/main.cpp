@@ -12,13 +12,15 @@ int main() {
 
     SqlType s_typ;
         
-    feat["ID"] = s_typ.INTEGER;
+    feat["SEX"] = s_typ.INTEGER;
     feat["NAME"] = s_typ.TEXT;
+    feat["BAG"] = s_typ.TEXT;
     std::string table_n = "COMPANY";
 
     DataBase database(name);
-    database.buildDB();
-    //database.createTable(table_n, feat);
     //database.fetchTables();
+    database.createTable(table_n, feat);
+    database.buildDB();
+    //database.deleteME();
     return 0;
 }
