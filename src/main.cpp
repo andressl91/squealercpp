@@ -18,7 +18,7 @@ int main() {
     std::string table_n = "COMPANY";
 
     DataBase database(name);
-    //database.fetchTables();
+    database.fetchTables();
     //database.createTable(table_n, feat);
     //database.fetchTableInfo(table_n);
     //database.deleteME();

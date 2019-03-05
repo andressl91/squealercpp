@@ -29,52 +29,53 @@ int map_callback(void *p_data, int num_fields, char **p_fields, char **p_col_nam
     return 0;
 }
 
-int map_buildDB(void *p_data, int num_fields, char **p_fields, char **p_col_names) {
-
-    int i;
-    std::string s;
-    for (i = 0; i < num_fields; i++) {
-            s = p_fields[i];
-            std::cout << s << "\n"; 
-    }
-
-    return 0;
-}
 
 DataBase::DataBase(std::string db_path)
     : con(db_path), dbPath(db_path) {}
 
 void DataBase::fetchTables() {
-    char *ErrMsg = 0;
+    con.openDB();
+    int rc = 0;
+    //stmt must be unique
+    sqlite3_stmt *stmt3;
     char * sql = "SELECT name FROM sqlite_master where type='table'";
-   
-    int exit = sqlite3_open(con.db_path.c_str(), &con.DB); 
-    char *errmsg;
-    int rc = sqlite3_exec(con.DB, sql, map_callback, &tables ,&errmsg);
-    
-  if (exit != SQLITE_OK) { 
-    std::cerr << "Error Insert" << std::endl; 
-    sqlite3_free(ErrMsg); 
-    } 
-    else
-    {}
+    sqlite3_prepare_v2(con.DB, sql, -1, &stmt3, NULL);
 
-    sqlite3_close(con.DB); 
+    char * st;
+    while( (rc = sqlite3_step(stmt3)) == SQLITE_ROW){
+        std::string table_name(reinterpret_cast<const char*>(sqlite3_column_text(stmt3, 0)));
+        fetchTableInfo(table_name);
+        std::cout << table_name << std::endl;
+        //std::cout << sqlite3_column_text(stmt3, 0) << std::endl;
+    }
+
+
+    if (rc != SQLITE_DONE){
+        std::cout << " FAILED TO FETCH TABLES \n";
+    }
+    else {
+        std::cout << "FETCHED TABLES \n";
+    }
+    sqlite3_finalize(stmt3);
+    con.closeDB();
 }
 
 void DataBase::fetchTableInfo(std::string table_name) {
     con.openDB();
     int rc = 0;
-    //stmt must be unique
+    std::string pragma_sql = "PRAGMA table_info(" + table_name + ");";
     sqlite3_stmt *stmt2;
-    sqlite3_prepare_v2(con.DB, "PRAGMA table_info(COMPANY);", -1, &stmt2, NULL);
-    //TODO: clasmethod shoud take string as arg for PRAGMA sql query
-    //TODO: Implement map for column_name and column_type. Used for table
-    //constructor
+    //sqlite3_prepare_v2(con.DB, "PRAGMA table_info(COMPANY);", -1, &stmt2, NULL);
+    sqlite3_prepare_v2(con.DB, pragma_sql.c_str(), -1, &stmt2, NULL);
     //TODO: Update tests
+    string_map column_map;
+    
     while( (rc = sqlite3_step(stmt2)) == SQLITE_ROW){
-        std::cout << sqlite3_column_text(stmt2, 1) << " " <<sqlite3_column_text(stmt2, 2) << "\n";
+        std::string column_name(reinterpret_cast<const char*>(sqlite3_column_text(stmt2, 1)));
+        std::string data_type(reinterpret_cast<const char*>(sqlite3_column_text(stmt2, 2)));
+        column_map[column_name] = data_type;
     }
+
 
     if (rc != SQLITE_DONE){
         std::cout << "FAILED PRAGMA \n";
