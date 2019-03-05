@@ -21,7 +21,8 @@ PYBIND11_MODULE(sql_database, m) {
     .def_readwrite("db_path", &DataBase::dbPath)
     .def_readwrite("tables", &DataBase::tables)
     .def("fetch_tables", &DataBase::fetchTables)
-    .def("create_table", &DataBase::createTable);
+    .def("create_table", &DataBase::createTable,
+       py::arg("table_name"), py::arg("features"), py::arg("overwrite") = false);
 
    py::class_<Connection>(m, "Connection")
     .def(py::init<std::string>())

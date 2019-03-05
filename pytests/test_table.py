@@ -9,23 +9,34 @@ def test_table():
 
 def test_database():
     #pass
+    db_name = "example.db"
+    with open(db_name, "w"):
+        pass
     db = DataBase("example.db")
     assert db.db_path == "example.db"
 
-    
+    # Test creating of new table
     assert len(db.tables) == 0
-    # feat = {"ID": "INT"}
     feat = {"ID": "INT", "NAME": "TEXT"}
-    # REMEMBER CREATE TABLE CAN ONLY CREATE ONCE FOR NOW
-    # IMPLEMENT OVERWRITE FLAG
     db.create_table("COMPANY", feat)
     assert len(db.tables) == 1
     assert list(db.tables) == ["COMPANY"]
-    assert db.tables["COMPANY"].table_name == "COMPANY"
 
+    # Check table attributes after creation
+    assert db.tables["COMPANY"].table_name == "COMPANY"
     assert db.tables["COMPANY"].columns["ID"] == "INT"
     assert db.tables["COMPANY"].columns["NAME"] == "TEXT"
 
+    feat = {"JIB": "TEXT", "JAB": "INT"}
+    # Make sure we do not create new table woth flag
+    db.create_table("COMPANY", feat, overwrite=False)
+    assert db.tables["COMPANY"].columns["ID"] == "INT"
+    assert db.tables["COMPANY"].columns["NAME"] == "TEXT"
+
+    # Check flag deletes table, (NOT CLEANSE)
+    db.create_table("COMPANY", feat, overwrite=True)
+    assert db.tables["COMPANY"].columns["JIB"] == "TEXT"
+    assert db.tables["COMPANY"].columns["JAB"] == "INT"
 
 def connection():
 
