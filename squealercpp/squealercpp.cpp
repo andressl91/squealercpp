@@ -13,7 +13,8 @@ PYBIND11_MODULE(sql_database, m) {
      py::class_<Table>(m, "Table")
      .def(py::init<>())
      .def(py::init<std::string>())
-     .def_readwrite("table_name", &Table::table_name);
+     .def_readwrite("table_name", &Table::table_name)
+     .def_readwrite("columns", &Table::columns);
 
    py::class_<DataBase>(m, "DataBase")
     .def(py::init<std::string>())

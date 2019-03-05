@@ -12,13 +12,19 @@ def test_database():
     db = DataBase("example.db")
     assert db.db_path == "example.db"
 
-    #db.fetch_tables()
     
-    feat = {"ID": "INT"}
+    assert len(db.tables) == 0
+    # feat = {"ID": "INT"}
+    feat = {"ID": "INT", "NAME": "TEXT"}
+    # REMEMBER CREATE TABLE CAN ONLY CREATE ONCE FOR NOW
+    # IMPLEMENT OVERWRITE FLAG
     db.create_table("COMPANY", feat)
     assert len(db.tables) == 1
     assert list(db.tables) == ["COMPANY"]
     assert db.tables["COMPANY"].table_name == "COMPANY"
+
+    assert db.tables["COMPANY"].columns["ID"] == "INT"
+    assert db.tables["COMPANY"].columns["NAME"] == "TEXT"
 
 
 def connection():
