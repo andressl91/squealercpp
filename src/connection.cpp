@@ -11,16 +11,14 @@ void Connection::openDB() {
  
   char *err_message = 0;
 
-  int rc = sqlite3_open("example.db", &DB);
+  int rc = sqlite3_open(db_path.c_str(), &DB);
 
   if (rc != SQLITE_OK) {
     std::cout << "Connection failed \n";
-    //sqlite3_close(DB);
-    //con
-    //return 1;
+    sqlite3_close(DB);
 
   } else {
-      std::cout <<  "Connected successfully \n";
+     // std::cout <<  "Connected successfully \n";
   }
 }
 
@@ -42,7 +40,7 @@ void Connection::query(std::string sql) {
         sqlite3_free(messaggeError); 
     } 
     else
-        std::cout << "Query Successfull" << std::endl; 
+        //std::cout << "Query Successfull" << std::endl; 
     sqlite3_close(DB); 
 
 }

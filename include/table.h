@@ -4,14 +4,15 @@
 #include <map>
 
 
+using string_map = std::map<std::string, std::string>;
 
 class Table {
     public:
     std::string table_name;
-    std::map<std::string, std::string> columns;
+    string_map columns;
 
     Table(std::string name);
-    Table(std::string name, std::map<std::string, std::string>);
+    Table(std::string name, string_map column_type);
     Table();
 
 };

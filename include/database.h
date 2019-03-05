@@ -26,9 +26,9 @@ class DataBase {
     Tables tables;
 
     DataBase(std::string);
-    void fetchTables();
     void createTable(std::string table_name, string_map featues) ;
-    void fetchTableInfo(std::string table_name);
+    void fetchTables();
+    string_map fetchTableInfo(std::string table_name);
     void deleteME();
     //void select();
     //void insert();
