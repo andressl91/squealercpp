@@ -22,6 +22,11 @@ void printRecords(std::vector<T> v) {
 DataBase::DataBase(std::string db_path)
     : con(db_path), dbPath(db_path) {}
 
+void DataBase::buildDB(){
+    tables.clear();
+    fetchTables();
+}
+
 void DataBase::fetchTables() {
     con.openDB();
     int rc = 0;
@@ -74,10 +79,11 @@ string_map DataBase::fetchTableInfo(std::string table_name) {
 }
 
 
-void DataBase::createTable(std::string table_name, string_map features) {
+void DataBase::createTable(std::string table_name, string_map features, bool overwrite) {
 
-    // TODO: THIS WILL PURGE EXISTING TABLE, DO CHECKS ETC 
-    //std::string sql = "DROP TABLE IF EXISTS " + table_name + "; ";
+    if(overwrite) {
+        dropTable(table_name);
+    }
     std::string sql;
     sql += "CREATE TABLE " + table_name + "(";
     
@@ -100,12 +106,34 @@ void DataBase::createTable(std::string table_name, string_map features) {
         std::cout << "FAILED CREATING TABLE \n";
     }
     else {
-        std::cout << "CREATED TABLE \n";
     }
 
    sqlite3_finalize(stmt); 
    con.closeDB();
-   fetchTables();
+   buildDB();
+}
+
+
+void DataBase::dropTable(std::string table_name) {
+    std::string sql;
+    sql += "DROP TABLE " + table_name + ";";
+    
+    
+    con.openDB();
+    int rc;
+    sqlite3_stmt *rm_stmt;
+    sqlite3_prepare_v2(con.DB, sql.c_str(), -1, &rm_stmt, NULL);
+     rc = sqlite3_step(rm_stmt);
+ 
+    if (rc != SQLITE_DONE){
+        std::cout << "FAILED CREATING TABLE \n";
+    }
+    else {
+    }
+
+   sqlite3_finalize(rm_stmt); 
+   con.closeDB();
+   buildDB();
 }
 
 
