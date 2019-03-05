@@ -62,32 +62,35 @@ void DataBase::fetchTables() {
     sqlite3_close(con.DB); 
 }
 
-void DataBase::buildDB() {
-    char *ErrMsg = 0;
-    char * sql = "PRAGMA table_info(COMPANY);";
-   
-    int exit = sqlite3_open(con.db_path.c_str(), &con.DB); 
-    char *errmsg;
+void DataBase::fetchTableInfo() {
+    con.openDB();
     int rc = 0;
-    //rc = sqlite3_exec(con.DB, sql, map_buildDB, &tables ,&errmsg);
-    rc = sqlite3_exec(con.DB, sql, map_buildDB, NULL ,&errmsg);
-    
-  if (exit != SQLITE_OK) { 
-    std::cerr << "Error Insert" << std::endl; 
-    sqlite3_free(ErrMsg); 
-    } 
-    else
-    {}
+    //stmt must be unique
+    sqlite3_stmt *stmt2;
+    sqlite3_prepare_v2(con.DB, "PRAGMA table_info(COMPANY);", -1, &stmt2, NULL);
+    //TODO: Implement map for column_name and column_type. Used for table
+    //constructor
+    while( (rc = sqlite3_step(stmt2)) == SQLITE_ROW){
+        std::cout << sqlite3_column_text(stmt2, 1) << " " <<sqlite3_column_text(stmt2, 2) << "\n";
+    }
 
-    sqlite3_close(con.DB); 
+    if (rc != SQLITE_DONE){
+        std::cout << "FAILED PRAGMA \n";
+    }
+    else {
+        std::cout << "SOME PRAGMA WORKED \n";
+    }
+    sqlite3_finalize(stmt2);
+    con.closeDB();
+
 }
 
 
 void DataBase::createTable(std::string table_name, string_map features) {
 
     // TODO: THIS WILL PURGE EXISTING TABLE, DO CHECKS ETC 
-    std::string sql = "DROP TABLE IF EXISTS " + table_name + "; ";
-    //std::string sql;
+    //std::string sql = "DROP TABLE IF EXISTS " + table_name + "; ";
+    std::string sql;
     sql += "CREATE TABLE " + table_name + "(";
     
     string_map::iterator itr;
@@ -115,9 +118,6 @@ void DataBase::createTable(std::string table_name, string_map features) {
    sqlite3_finalize(stmt); 
    con.closeDB();
    //fetchTables();
-
-
-
 }
 
 void DataBase::deleteME() {

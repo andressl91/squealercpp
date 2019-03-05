@@ -20,7 +20,7 @@ int main() {
     DataBase database(name);
     //database.fetchTables();
     database.createTable(table_n, feat);
-    //database.buildDB();
+    database.fetchTableInfo();
     //database.deleteME();
     return 0;
 }
