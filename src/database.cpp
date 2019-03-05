@@ -68,8 +68,10 @@ void DataBase::fetchTableInfo() {
     //stmt must be unique
     sqlite3_stmt *stmt2;
     sqlite3_prepare_v2(con.DB, "PRAGMA table_info(COMPANY);", -1, &stmt2, NULL);
+    //TODO: clasmethod shoud take string as arg for PRAGMA sql query
     //TODO: Implement map for column_name and column_type. Used for table
     //constructor
+    //TODO: Update tests
     while( (rc = sqlite3_step(stmt2)) == SQLITE_ROW){
         std::cout << sqlite3_column_text(stmt2, 1) << " " <<sqlite3_column_text(stmt2, 2) << "\n";
     }
