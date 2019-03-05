@@ -34,30 +34,8 @@ int map_buildDB(void *p_data, int num_fields, char **p_fields, char **p_col_name
     int i;
     std::string s;
     for (i = 0; i < num_fields; i++) {
-            //std::cout << p_fields[i] << "\n"; 
-            s = p_fields[i]);
+            s = p_fields[i];
             std::cout << s << "\n"; 
-            //std::cout << p_col_names[i] << " " <<  p_fields[i] << "\n"; 
-    }
-        //std::regex word_regex("\\b[A-Z]*(?=[,\)])");
-        //std::regex word_regex("\\b[A-Z]* \\b[A-Z]*(?=[,\)])");
-
-    std::regex word_regex("\\b\\w)");
-
-    auto words_begin =
-        std::sregex_iterator(s.begin(), s.end(), word_regex);
-    auto words_end = std::sregex_iterator();
-
-    std::cout << "Found "
-              << std::distance(words_begin, words_end)
-              << " words\n";
-
-    for (std::sregex_iterator i = words_begin; i != words_end; ++i) {
-        std::smatch match = *i;
-        std::string match_str = match.str();
-        //if (match_str.size() > N) {
-            std::cout << "  " << match_str << '\n';
-        //}
     }
 
     return 0;
@@ -87,10 +65,6 @@ void DataBase::fetchTables() {
 void DataBase::buildDB() {
     char *ErrMsg = 0;
     char * sql = "PRAGMA table_info(COMPANY);";
-    //char * sql = "SELECT name from PRAGMA table_info(COMPANY);";
-    //char * sql = "SELECT typeof(BAG) from COMPANY;";
-    //char * sql = "SELECT group_concat(name, ',') FROM pragma_table_info('COMPANY');";
-    //char * sql = "SELECT sql FROM sqlite_master WHERE tbl_name = 'COMPANY' AND type = 'table'";
    
     int exit = sqlite3_open(con.db_path.c_str(), &con.DB); 
     char *errmsg;
@@ -111,8 +85,9 @@ void DataBase::buildDB() {
 
 void DataBase::createTable(std::string table_name, string_map features) {
 
-    
+    // TODO: THIS WILL PURGE EXISTING TABLE, DO CHECKS ETC 
     std::string sql = "DROP TABLE IF EXISTS " + table_name + "; ";
+    //std::string sql;
     sql += "CREATE TABLE " + table_name + "(";
     
     string_map::iterator itr;
@@ -121,11 +96,27 @@ void DataBase::createTable(std::string table_name, string_map features) {
         sql += itr->first + " " + itr->second + ", ";
     }
     //itr is now last element
-    sql += itr->first + " " + itr->second + " ); ";
+    sql += itr->first + " " + itr->second + "); ";
+    std::cout << sql << std::endl;
+    
+    con.openDB();
+    int rc;
+    sqlite3_stmt *stmt;
+    sqlite3_prepare_v2(con.DB, sql.c_str(), -1, &stmt, NULL);
+     rc = sqlite3_step(stmt);
+ 
+    if (rc != SQLITE_DONE){
+        std::cout << "FAILED CREATING TABLE \n";
+    }
+    else {
+        std::cout << "CREATED TABLE \n";
+    }
 
-    //std::cout << sql << std::endl;
-    con.query(sql);
-    fetchTables();
+   sqlite3_finalize(stmt); 
+   con.closeDB();
+   //fetchTables();
+
+
 
 }
 

@@ -11,10 +11,10 @@ void Connection::openDB() {
  
   char *err_message = 0;
 
-  int rc = sqlite3_open("student.db", &DB);
+  int rc = sqlite3_open("example.db", &DB);
 
   if (rc != SQLITE_OK) {
-
+    std::cout << "Connection failed \n";
     //sqlite3_close(DB);
     //con
     //return 1;
