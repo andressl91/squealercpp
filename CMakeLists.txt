@@ -9,7 +9,7 @@ find_library(sqlite3 NAMES sqlite3 PATHS ${SQLITE_LIB_DIR})
 set(SQLITE_INDLUCE_DIR /usr/include)
 
 include_directories(include)
-add_library(squealer STATIC src/database.cpp src/connection.cpp src/table.cpp src/sqltypes.cpp)
+add_library(squealer STATIC src/database.cpp src/connection.cpp src/table.cpp src/sqltypes.cpp src/statement.cpp)
 # Org
 # target_compile_options(squealer PUBLIC -Wall -lsqlite3)
 target_compile_options(squealer PUBLIC -Wall -fPIC -lsqlite3)
