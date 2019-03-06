@@ -56,6 +56,8 @@ BOOST_AUTO_TEST_CASE(TableOperations){
     BOOST_CHECK_EQUAL(tbl.columns["JAB"], s_typ.TEXT);
     BOOST_CHECK_EQUAL(tbl.columns["JIB"], s_typ.INTEGER);
 
+    BOOST_CHECK_EQUAL(tbl.columns["JAB"], tbl.Features()["JAB"]);
+
     database.dropTable(table_n);
     BOOST_CHECK(database.tables.size() == 0);
 

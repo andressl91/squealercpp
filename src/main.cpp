@@ -18,9 +18,13 @@ int main() {
     std::string table_n = "COMPANY";
 
     DataBase database(name);
-    database.fetchTables();
-    //database.createTable(table_n, feat);
+
+    database.createTable(table_n, feat);
     //database.fetchTableInfo(table_n);
     //database.deleteME();
+    
+    Table tbl = database.tables["COMPANY"];
+    std::cout << tbl.table_name + "\n" ;
+    std::cout << tbl.Features()["NAME"];
     return 0;
 }
