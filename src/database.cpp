@@ -39,7 +39,7 @@ void DataBase::fetchTables() {
     while( (rc = sqlite3_step(stmt3)) == SQLITE_ROW){
         std::string table_name(reinterpret_cast<const char*>(sqlite3_column_text(stmt3, 0)));
         string_map table_info = fetchTableInfo(table_name);
-        tables[table_name] = Table(table_name, table_info); 
+        tables[table_name] = Table(table_name, table_info, &con);
     }
 
     if (rc != SQLITE_DONE){

@@ -25,6 +25,7 @@ int main() {
     
     Table tbl = database.tables["COMPANY"];
     std::cout << tbl.table_name + "\n" ;
-    std::cout << tbl.Features()["NAME"];
+    std::cout << tbl.Features()["NAME"] + "\n";
+    std::cout << tbl.con->db_path + "\n";
     return 0;
 }
