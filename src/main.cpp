@@ -27,5 +27,15 @@ int main() {
     std::cout << tbl.table_name + "\n" ;
     std::cout << tbl.Features()["NAME"] + "\n";
     std::cout << tbl.con->db_path + "\n";
+    
+    
+    string_map inserts;
+    //CHANGE TO INT FOR INSERT, MIGHT RESULT IN ERROR
+    inserts["SEX"] = "1";
+    inserts["NAME"] = "HEY";
+    inserts["BAG"] = "mybag";
+
+    tbl.Insert(inserts);
+    
     return 0;
 }

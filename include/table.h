@@ -3,6 +3,7 @@
 #include <string>
 #include <map>
 #include "connection.h"
+#include <sqlite3.h>
 
 
 
@@ -18,6 +19,8 @@ class Table {
     Table(std::string name, string_map column_type);
     Table(std::string name, string_map column_type, Connection *con);
     string_map Features();
+
+    void Insert(string_map values);
 
 };
 
