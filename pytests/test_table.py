@@ -55,7 +55,8 @@ def test_delete():
     db.create_table("COMPANY", feat)
     table = db.tables["COMPANY"]
     
-    insert_stmt = {""}
+    insert_stmt = {"ID": "ME", "NAME": "ANDY"}
+    table.insert(insert_stmt)
 
 def connection():
 
