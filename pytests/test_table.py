@@ -38,6 +38,25 @@ def test_database():
     assert db.tables["COMPANY"].columns["JIB"] == "TEXT"
     assert db.tables["COMPANY"].columns["JAB"] == "INT"
 
+    table = db.tables["COMPANY"]
+    
+    insert_stmt = {""}
+
+
+def test_delete():
+
+    db_name = "example.db"
+    with open(db_name, "w"):
+        pass
+    db = DataBase("example.db")
+    assert db.db_path == "example.db"
+
+    feat = {"ID": "TEXT", "NAME": "TEXT"}
+    db.create_table("COMPANY", feat)
+    table = db.tables["COMPANY"]
+    
+    insert_stmt = {""}
+
 def connection():
 
     con = Connection("test.db")

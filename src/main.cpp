@@ -14,15 +14,11 @@ int main() {
         
     feat["SEX"] = s_typ.INTEGER;
     feat["PEOPLE"] = s_typ.INTEGER;
-    //feat["NAME"] = s_typ.TEXT;
-    //feat["BAG"] = s_typ.TEXT;
     std::string table_n = "COMPANY";
 
     DataBase database(name);
 
     database.createTable(table_n, feat);
-    //database.fetchTableInfo(table_n);
-    //database.deleteME();
     
     Table tbl = database.tables["COMPANY"];
     std::cout << tbl.table_name + "\n" ;
@@ -34,7 +30,7 @@ int main() {
     string_map inserts;
     //CHANGE TO INT FOR INSERT, MIGHT RESULT IN ERROR
     inserts["SEX"] = "1";
-    inserts["PEOPLE"] = "2";
+    inserts["PEOPLE"] = 2;
     //inserts["NAME"] = "HEY";
     //inserts["BAG"] = "mybag";
 

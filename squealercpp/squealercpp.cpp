@@ -28,8 +28,6 @@ PYBIND11_MODULE(sql_database, m) {
     .def(py::init<std::string>())
     .def_readwrite("db_path", &Connection::db_path);
 
-    // .def_readwrite("db_path", &DataBase::dbPath);
-    // .def(py::init<std::string>());
  }                          
 
 

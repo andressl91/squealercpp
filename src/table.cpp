@@ -2,6 +2,7 @@
 #include <iostream>
 
 
+
 using string_map = std::map<std::string, std::string>;
 
 Table::Table() 
@@ -48,7 +49,18 @@ void Table::PreparedStatement(string_map values) {
 }
 
 void Table::Insert(string_map values) {
-
+/**
+    for (auto item: values) {
+  auto key = item.first;
+  if (pybind11::str(key).check()) {
+    // do something on str.
+      std::cout << "HEllo STRING \n";
+  } else if (pybind11::int_(key).check()) {
+      std::cout << "HELLO INT \n";
+  }
+  ...
+}
+*/
     //Define sql statement AND sqlite3_pepare_v2 ONCE
     PreparedStatement(values);
     string_map::iterator itr;
