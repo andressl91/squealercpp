@@ -4,6 +4,7 @@
 #include <sqlite3.h>
 #include <string>
 #include "connection.h"
+#include <pybind11.h>
 
 class Statement {
 

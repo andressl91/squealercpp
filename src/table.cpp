@@ -72,6 +72,13 @@ void Table::Insert(string_map values) {
     }
 
     statement.step();
-
-
 }
+
+//void Table::Insert_v2(py::dict dict)
+/* Easily iterate over a dictionary using a C++11 range-based for loop */
+/**
+    void print_dict(py::dict dict) {
+        for (auto item : dict)
+            std::cout << "key: " << item.first << ", value=" << item.second << std::endl;
+    }
+*/
