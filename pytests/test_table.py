@@ -27,7 +27,8 @@ def test_database():
     assert db.tables["COMPANY"].columns["ID"] == "INT"
     assert db.tables["COMPANY"].columns["NAME"] == "TEXT"
 
-    feat = {"JIB": "TEXT", "JAB": "INT"}
+    # CHECK AT WE SUPPORT ALL BASIC TYPES (NOT BLOB YET)
+    feat = {"JIB": "TEXT", "JAB": "INT", "JOB": "FLOAT"}
     # Make sure we do not create new table woth flag
     db.create_table("COMPANY", feat, overwrite=False)
     assert db.tables["COMPANY"].columns["ID"] == "INT"
@@ -37,10 +38,11 @@ def test_database():
     db.create_table("COMPANY", feat, overwrite=True)
     assert db.tables["COMPANY"].columns["JIB"] == "TEXT"
     assert db.tables["COMPANY"].columns["JAB"] == "INT"
+    assert db.tables["COMPANY"].columns["JOB"] == "FLOAT"
 
     table = db.tables["COMPANY"]
     
-    table.insert({"JIB": 2})
+    table.insert({"JIB": "HEY J", "JAB": 2, "JOB": 4.4})
     #insert_stmt = {""}
 
 

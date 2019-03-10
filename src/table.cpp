@@ -62,20 +62,20 @@ void Table::Insert(py_map values) {
             
             if (py::isinstance<py::str>(itr->second)) {
            std::cout << "THIS IS A STRING HAH \n";
-            //std::string o = py::cast<std::string>(itr->second);
+            std::string o = py::cast<std::string>(itr->second);
             //std::cout << o << std::endl;
                 }
-            if (py::isinstance<py::int_>(itr->second)) {
+            else if (py::isinstance<py::int_>(itr->second)) {
                 std::cout << "THIS IS A INTEGER HAH \n";
            int o = py::cast<int>(itr->second);
            //int o = itr->second.cast<int>();
            std::cout << o << std::endl;
                }
-            //if (py::isinstance<py::float_>(itr->second)) {
-            //std::cout << "FLOAT \n";
-            //float o = py::cast<float>(itr->second);
+            else if (py::isinstance<py::float_>(itr->second)) {
+            std::cout << "THSI IS A FLOAT FLOAT HAH \n";
+            float o = py::cast<float>(itr->second);
             //std::cout << o << std::endl;
-            //}
+            }
              //
             else{
                 std::cout << "UNKNOWN TYPE \n";
