@@ -1,12 +1,16 @@
 #ifndef TABLE
 #define TABLE
+#include "pybind11.h"
+#include "stl.h"
 #include <string>
 #include <map>
 #include "connection.h"
 #include <sqlite3.h>
-#include <statement.h>
+#include "statement.h"
 
 
+namespace py = pybind11;
+using py_map = std::map<std::string, py::object>;
 
 using string_map = std::map<std::string, std::string>;
 class Table {
@@ -24,6 +28,7 @@ class Table {
     string_map Features();
 
     void PreparedStatement(string_map values);
+    void Insert(py_map values);
     void Insert(string_map values);
 
 };

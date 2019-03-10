@@ -40,7 +40,8 @@ def test_database():
 
     table = db.tables["COMPANY"]
     
-    insert_stmt = {""}
+    table.insert({"JIB": 2})
+    #insert_stmt = {""}
 
 
 def test_delete():

@@ -4,7 +4,9 @@
 #include <sqlite3.h>
 #include <string>
 #include "connection.h"
-#include <pybind11.h>
+//#include "pybind11.h"
+//TODO: Make include to pybind11.h work i CMAKE
+//THAT PART AFTER -PIC
 
 class Statement {
 

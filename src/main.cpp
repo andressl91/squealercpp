@@ -1,6 +1,10 @@
 #include <iostream>
+#include "pybind11.h"
+#include "stl.h"
+
 #include "database.h"
 #include "sqltypes.h"
+#include "table.h"
 
 
 
@@ -21,16 +25,16 @@ int main() {
     database.createTable(table_n, feat);
     
     Table tbl = database.tables["COMPANY"];
-    std::cout << tbl.table_name + "\n" ;
-    std::cout << tbl.Features()["SEX"] + "\n";
-    std::cout << tbl.con->db_path + "\n";
+    //std::cout << tbl.table_name + "\n" ;
+    //std::cout << tbgtl.Features()["SEX"] + "\n";
+    //std::cout << tbl.con->db_path + "\n";
     
-    tbl.PreparedStatement(feat);
+    //tbl.PreparedStatement(feat);
     
     string_map inserts;
     //CHANGE TO INT FOR INSERT, MIGHT RESULT IN ERROR
     inserts["SEX"] = "1";
-    inserts["PEOPLE"] = 2;
+    //inserts["PEOPLE"] = 2;
     //inserts["NAME"] = "HEY";
     //inserts["BAG"] = "mybag";
 
