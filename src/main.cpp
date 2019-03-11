@@ -29,7 +29,7 @@ int main() {
     //std::cout << tbgtl.Features()["SEX"] + "\n";
     //std::cout << tbl.con->db_path + "\n";
     
-    //tbl.PreparedStatement(feat);
+    tbl.PreparedStatement(feat);
     
     string_map inserts;
     //CHANGE TO INT FOR INSERT, MIGHT RESULT IN ERROR
@@ -40,7 +40,7 @@ int main() {
 
     //tbl.Insert(inserts);
     const int n = 2;
-    tbl.MultiPreparedStatement(n);
+    //tbl.MultiPreparedStatement(n);
     
     return 0;
 }

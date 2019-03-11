@@ -81,16 +81,35 @@ def multiple_write_of_rows_cpp(n_rows, memory: bool=False):
     data_table = db_tools.tables["data"]
     data_table.bulk_insert(sql_data)
 
+# MULTI WRITE C++ V2
+def multiple_write_of_rows_cpp_v2(n_rows, memory: bool=False):
+    td = tempfile.mkdtemp()
+    tf = Path(td) / "test_rows.db"
+    tf = str(tf)
+    tf = "squealercpp.db"
+    db_tools = squeal.DataBase(tf)
+
+    categories, sql_data = get_lots_of_data(n_rows=n_rows)
+
+    db_tools.create_table("data", categories)
+
+    data_table = db_tools.tables["data"]
+
+
+    data_table = db_tools.tables["data"]
+    data_table.bulk_insert_v2(sql_data)
+
 # MULTI WRITE PYTHON
 def multiple_write_of_rows(n_rows, memory: bool=False):
     td = tempfile.mkdtemp()
     tf = Path(td) / "test_mrows.db"
     tf = str(tf)
-    tf = "squealercpp.db"
+    tf = "squealer.db"
     db_tools = DataBase(db_path=tf)
 
 
     db_tools.set_local_session
+
 
 
     categories, sql_data = get_lots_of_data(n_rows=n_rows)
@@ -116,6 +135,11 @@ def test_benchmark_single_row_write_cpp(benchmark):
 def test_benchmark_multi_row_write_cpp(benchmark):
     in_kwargs = {"n_rows": n_rows, "memory": False} 
     result = benchmark.pedantic(multiple_write_of_rows_cpp, kwargs=in_kwargs) 
+
+@pytest.mark.write
+def test_benchmark_multi_row_write_cpp_v2(benchmark):
+    in_kwargs = {"n_rows": n_rows, "memory": False} 
+    result = benchmark.pedantic(multiple_write_of_rows_cpp_v2, kwargs=in_kwargs) 
 
 @pytest.mark.write
 def test_benchmark_multi_row_write(benchmark):

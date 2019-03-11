@@ -24,7 +24,8 @@ PYBIND11_MODULE(sql_database, m) {
      //.def("insert", &Table::Insert);
      .def("insert", (void (Table::*)(py_map *)) &Table::Insert, "Set the pet's age")
      .def("insert", (void (Table::*)(string_map)) &Table::Insert, "Set the pet's name")
-     .def("bulk_insert", (void (Table::*)(py_map_vector *)) &Table::bulkInsert, "Set the pet's name");
+     .def("bulk_insert", (void (Table::*)(py_map_vector *)) &Table::bulkInsert, "Set the pet's name")
+     .def("bulk_insert_v2", (void (Table::*)(py_map_vector *)) &Table::bulkInsert_v2, "Set the pet's name");
 
    py::class_<DataBase>(m, "DataBase")
     .def(py::init<std::string>())

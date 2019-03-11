@@ -40,10 +40,12 @@ void Table::PreparedStatement(T values) {
     
     sql += "VALUES (";
 
+    int i = 1;
     for (itr = values.begin(); itr != --values.end(); itr++){
-        sql += "?, ";
+        sql += "?" + std::to_string(i)  + ", ";
+        i++;
     }
-    sql += "?);";
+    sql += "?" + std::to_string(i) + ")";
 
     prepared_stmt = sql;
     //std::cout << prepared_stmt << std::endl;
@@ -61,18 +63,18 @@ void Table::Insert(py_map * values) {
     for (itr = values->begin(); itr != values->end(); itr++){
         
         if (py::isinstance<py::str>(itr->second)) {
-        std::string o = py::cast<std::string>(itr->second);
-        statement.bind(i, o);
+        const std::string o = py::cast<std::string>(itr->second);
+        statement.bind(&i, &o);
         i++;
             }
         else if (py::isinstance<py::int_>(itr->second)) {
-       int o = py::cast<int>(itr->second);
-        statement.bind(i, o);
+        const int o = py::cast<int>(itr->second);
+        statement.bind(&i, &o);
         i++;
            }
         else if (py::isinstance<py::float_>(itr->second)) {
-        int o = py::cast<float>(itr->second);
-        statement.bind(i, o);
+        const float o = py::cast<float>(itr->second);
+        statement.bind(&i, &o);
         i++;
         }
          //
@@ -88,13 +90,11 @@ void Table::Insert(py_map * values) {
 
 //C++ Insert
 void Table::Insert(string_map values) {
-    //Define sql statement AND sqlite3_pepare_v2 ONCE
     PreparedStatement(values);
     string_map::iterator itr;
     int i = 1;
     for (itr = values.begin(); itr != values.end(); itr++){
-        //std::cout << itr->first << " " << itr->second << "\n";
-        statement.bind(i, itr->second);
+        statement.bind(&i, &itr->second);
         i++;
     }
 
@@ -102,7 +102,6 @@ void Table::Insert(string_map values) {
 }
 
 void Table::MultiPreparedStatement(const int n_inserts) {
-    std::string sql_start = "BEGIN;";
     std::string sql = "INSERT INTO " + table_name + " (";
     string_map::iterator itr;
     for (itr = columns.begin(); itr != --columns.end(); itr++){
@@ -138,46 +137,49 @@ void Table::bulkInsert(const py_map_vector * values){
 }
 
 
-void Table::bulkInsert_v2(py_map_vector * values){
+void Table::bulkInsert_v2(const py_map_vector * values){
 
-    int i = 1;
-    const int bulk_size = values->size();
-    
-    for (auto val : *values) {
-    
-    //std::cout << bulk_size << std::endl;
-    //MultiPreparedStatement(bulk_size);
+    char *err_message = 0;
+
+    con->openDB();
+    int rc = sqlite3_exec(con->DB, "BEGIN TRANSACTION", NULL, NULL, &err_message);
+
+    int i;
     py_map * value;
     for (auto val : *values) {
 
         value = &val;
         py_map::iterator itr;
+        i = 1;
         for (itr = value->begin(); itr != value->end(); itr++){
             
             if (py::isinstance<py::str>(itr->second)) {
-            std::string o = py::cast<std::string>(itr->second);
-            std::cout << o + " STRING \n";
-            multi_statement.bind(i, o);
+            const std::string o = py::cast<std::string>(itr->second);
+            statement.bind(&i, &o);
             i++;
                 }
-            else if (py::isinstance<py::int_>(itr->second)) {
-           int o = py::cast<int>(itr->second);
-            std::cout << o + " INT  \n";
-            multi_statement.bind(i, o);
-            i++;
-               }
             else if (py::isinstance<py::float_>(itr->second)) {
-            int o = py::cast<float>(itr->second);
-            multi_statement.bind(i, o);
+            const float o = py::cast<float>(itr->second);
+            //std::cout << o + " FLOAT  \n";
+            statement.bind(&i, &o);
             i++;
             }
-             //
+            else if (py::isinstance<py::int_>(itr->second)) {
+           const float o = py::cast<int>(itr->second);
+            //std::cout << o + " INT  \n";
+            statement.bind(&i, &o);
+            i++;
+               }
             else{
                 std::cout << "UNKNOWN TYPE \n";
             }       
+
         }
+        statement.step();
+        statement.reset();
     } 
-        multi_statement.step();
-        multi_statement.reset();
-}   
+    rc = sqlite3_exec(con->DB, "COMMIT TRANSACTION", NULL, NULL, &err_message);
+    // include in statement class, with cleanup for new stmt
+    sqlite3_finalize(statement.insert_stmt);
+   
 }
