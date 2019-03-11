@@ -42,8 +42,10 @@ def test_database():
 
     table = db.tables["COMPANY"]
     
-    table.insert({"JIB": "HEY J", "JAB": 2, "JOB": 4.4})
+    insert_data = {"JIB": "HEY J", "JAB": 2, "JOB": 4.4}
+    #table.insert(insert_data)
     #insert_stmt = {""}
+    table.bulk_insert([insert_data, insert_data])
 
 
 def test_delete():

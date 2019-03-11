@@ -38,7 +38,9 @@ int main() {
     //inserts["NAME"] = "HEY";
     //inserts["BAG"] = "mybag";
 
-    tbl.Insert(inserts);
+    //tbl.Insert(inserts);
+    const int n = 2;
+    tbl.MultiPreparedStatement(n);
     
     return 0;
 }
