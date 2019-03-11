@@ -127,7 +127,7 @@ void Table::MultiPreparedStatement(const int n_inserts) {
     multi_statement.prepare(con, prepared_stmt);
 }
 
-void Table::bulkInsert(py_map_vector * values){
+void Table::bulkInsert(const py_map_vector * values){
 
     int i = 1;
     const int bulk_size = values->size();
@@ -135,43 +135,6 @@ void Table::bulkInsert(py_map_vector * values){
     for (auto val : *values) {
         Insert(&val);
     }
-    //for (itr_vec = values.begin(); itr_vec != values.end(); itr_vec++) {
-    /**
-    //std::cout << bulk_size << std::endl;
-    //MultiPreparedStatement(bulk_size);
-    py_map * value;
-    for (auto val : *values) {
-
-        value = &val;
-        py_map::iterator itr;
-        for (itr = value->begin(); itr != value->end(); itr++){
-            
-            if (py::isinstance<py::str>(itr->second)) {
-            std::string o = py::cast<std::string>(itr->second);
-            std::cout << o + " STRING \n";
-            multi_statement.bind(i, o);
-            i++;
-                }
-            else if (py::isinstance<py::int_>(itr->second)) {
-           int o = py::cast<int>(itr->second);
-            std::cout << o + " INT  \n";
-            multi_statement.bind(i, o);
-            i++;
-               }
-            else if (py::isinstance<py::float_>(itr->second)) {
-            int o = py::cast<float>(itr->second);
-            multi_statement.bind(i, o);
-            i++;
-            }
-             //
-            else{
-                std::cout << "UNKNOWN TYPE \n";
-            }       
-        }
-    } 
-        multi_statement.step();
-        multi_statement.reset();
-        */
 }
 
 
@@ -216,4 +179,5 @@ void Table::bulkInsert_v2(py_map_vector * values){
     } 
         multi_statement.step();
         multi_statement.reset();
+}   
 }

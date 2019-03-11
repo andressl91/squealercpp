@@ -86,13 +86,11 @@ def multiple_write_of_rows(n_rows, memory: bool=False):
     td = tempfile.mkdtemp()
     tf = Path(td) / "test_mrows.db"
     tf = str(tf)
+    tf = "squealercpp.db"
     db_tools = DataBase(db_path=tf)
 
-    if memory:
-        db_tools.set_memory_session
 
-    else:
-        db_tools.set_local_session
+    db_tools.set_local_session
 
 
     categories, sql_data = get_lots_of_data(n_rows=n_rows)

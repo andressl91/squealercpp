@@ -36,7 +36,7 @@ class Table {
     //void PreparedStatement(string_map values);
     void Insert(py_map * values);
     void Insert(string_map values);
-    void bulkInsert(py_map_vector * values);
+    void bulkInsert(const py_map_vector * values);
     void bulkInsert_v2(py_map_vector * values);
 
 };
