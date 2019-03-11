@@ -30,7 +30,7 @@ class Table {
     template <typename T>
     void PreparedStatement(T values);
     //void PreparedStatement(string_map values);
-    void Insert(py_map values);
+    void Insert(py_map * values);
     void Insert(string_map values);
 
 };

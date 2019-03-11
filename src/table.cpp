@@ -54,13 +54,13 @@ void Table::PreparedStatement(T values) {
 
 }
 //PYTHON INSERT
-void Table::Insert(py_map values) {
+void Table::Insert(py_map * values) {
 
     //PreparedStatement(values);
     int i = 1;
 
     py_map::iterator itr;
-    for (itr = values.begin(); itr != values.end(); itr++){
+    for (itr = values->begin(); itr != values->end(); itr++){
         
         if (py::isinstance<py::str>(itr->second)) {
         std::string o = py::cast<std::string>(itr->second);

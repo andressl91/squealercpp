@@ -20,7 +20,7 @@ PYBIND11_MODULE(sql_database, m) {
      .def_readwrite("table_name", &Table::table_name)
      .def_readwrite("columns", &Table::columns)
      //.def("insert", &Table::Insert);
-     .def("insert", (void (Table::*)(py_map)) &Table::Insert, "Set the pet's age")
+     .def("insert", (void (Table::*)(py_map *)) &Table::Insert, "Set the pet's age")
      .def("insert", (void (Table::*)(string_map)) &Table::Insert, "Set the pet's name");
 
    py::class_<DataBase>(m, "DataBase")
