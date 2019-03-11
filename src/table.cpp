@@ -22,6 +22,7 @@ Table::Table(std::string name, string_map column_type)
 Table::Table(std::string name, string_map column_type, Connection *connection) 
     : table_name(name), columns(column_type), con(connection)
 {
+    PreparedStatement(columns);
 }
 
 string_map Table::Features(){
@@ -55,7 +56,7 @@ void Table::PreparedStatement(T values) {
 //PYTHON INSERT
 void Table::Insert(py_map values) {
 
-    PreparedStatement(values);
+    //PreparedStatement(values);
     int i = 1;
 
     py_map::iterator itr;
@@ -82,20 +83,13 @@ void Table::Insert(py_map values) {
         }       
     }
         statement.step();
+        
+        //Reset Insert for next insert method call
+        statement.reset();
 }
 
 //C++ Insert
 void Table::Insert(string_map values) {
-//    for (auto item: values) {
-//  auto key = item.first;
-//  if (pybind11::str(key).check()) {
-//    // do something on str.
- //     std::cout << "HEllo STRING \n";
-//  } else if (pybind11::int_(key).check()) {
-//      std::cout << "HELLO INT \n";
-//  }
- // ...
-//}
     //Define sql statement AND sqlite3_pepare_v2 ONCE
     PreparedStatement(values);
     string_map::iterator itr;
@@ -108,9 +102,3 @@ void Table::Insert(string_map values) {
 
     statement.step();
 }
-//void Table::Insert_v2(py::dict dict)
-// Easily iterate over a dictionary using a C++11 range-based for loop */
-//    void print_dict(py::dict dict) {
-//        for (auto item : dict)
-//            std::cout << "key: " << item.first << ", value=" << item.second << std::endl;
-//    }
