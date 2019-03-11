@@ -34,6 +34,21 @@ void Statement::bind(int const index, int const value){
     
 }
 
+void Statement::bind(int const index, float const value){
+    
+    
+
+     auto const result = sqlite3_bind_double(insert_stmt,
+                                       index,
+                                       value);
+
+  if (SQLITE_OK != result)
+  {
+    std::cout << "ERROR IN BIND FLOAT \n";    
+  }
+    
+}
+
 void Statement::bind(int const index, std::string value){
 
     auto const result = sqlite3_bind_text(insert_stmt,

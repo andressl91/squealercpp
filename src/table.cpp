@@ -28,8 +28,11 @@ string_map Table::Features(){
     return columns;
 }
 
-void Table::PreparedStatement(string_map values) {
-    string_map::iterator itr;
+template <typename T>
+void Table::PreparedStatement(T values) {
+//void Table::PreparedStatement(string_map values) {
+    //string_map::iterator itr;
+    typename T::iterator itr;
     std::string sql = "INSERT INTO " + table_name + " (";
     for (itr = values.begin(); itr != --values.end(); itr++){
         sql += itr->first + ",";
@@ -51,36 +54,34 @@ void Table::PreparedStatement(string_map values) {
 }
 //PYTHON INSERT
 void Table::Insert(py_map values) {
-    
-    //TODO: OVERRIDE FUNCTION PRBLEM FOR PYBIND11 build part
-    //TODO: Checkout pybind11 module for cmake!
 
-    py_map::iterator itr;
+    PreparedStatement(values);
     int i = 1;
 
-        for (itr = values.begin(); itr != values.end(); itr++){
-            
-            if (py::isinstance<py::str>(itr->second)) {
-           std::cout << "THIS IS A STRING HAH \n";
-            std::string o = py::cast<std::string>(itr->second);
-            //std::cout << o << std::endl;
-                }
-            else if (py::isinstance<py::int_>(itr->second)) {
-                std::cout << "THIS IS A INTEGER HAH \n";
-           int o = py::cast<int>(itr->second);
-           //int o = itr->second.cast<int>();
-           std::cout << o << std::endl;
-               }
-            else if (py::isinstance<py::float_>(itr->second)) {
-            std::cout << "THSI IS A FLOAT FLOAT HAH \n";
-            float o = py::cast<float>(itr->second);
-            //std::cout << o << std::endl;
+    py_map::iterator itr;
+    for (itr = values.begin(); itr != values.end(); itr++){
+        
+        if (py::isinstance<py::str>(itr->second)) {
+        std::string o = py::cast<std::string>(itr->second);
+        statement.bind(i, o);
+        i++;
             }
-             //
-            else{
-                std::cout << "UNKNOWN TYPE \n";
-            }       
+        else if (py::isinstance<py::int_>(itr->second)) {
+       int o = py::cast<int>(itr->second);
+        statement.bind(i, o);
+        i++;
+           }
+        else if (py::isinstance<py::float_>(itr->second)) {
+        int o = py::cast<float>(itr->second);
+        statement.bind(i, o);
+        i++;
         }
+         //
+        else{
+            std::cout << "UNKNOWN TYPE \n";
+        }       
+    }
+        statement.step();
 }
 
 //C++ Insert

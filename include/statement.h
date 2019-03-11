@@ -16,6 +16,7 @@ class Statement {
     Statement();
     void prepare(Connection * con, std::string sql);
     void bind(int const index, int const value);
+    void bind(int const index, float const value);
     void bind(int const index, std::string value);
     void step();
     void reset();

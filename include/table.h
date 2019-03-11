@@ -27,7 +27,9 @@ class Table {
     Table(std::string name, string_map column_type, Connection *con);
     string_map Features();
 
-    void PreparedStatement(string_map values);
+    template <typename T>
+    void PreparedStatement(T values);
+    //void PreparedStatement(string_map values);
     void Insert(py_map values);
     void Insert(string_map values);
 
