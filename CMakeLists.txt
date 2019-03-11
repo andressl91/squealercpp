@@ -36,7 +36,8 @@ target_include_directories(squeal PRIVATE {SQLITE_INDLUCE_DIR} {PYBIND_INDLUCE_D
 # tests
 enable_testing()
 add_executable(test_squealer tests/main.cpp)
-target_link_libraries(test_squealer squealer Boost::unit_test_framework sqlite3)
+target_link_libraries(test_squealer squealer Boost::unit_test_framework sqlite3 python3.7m)
+target_include_directories(squeal PRIVATE {SQLITE_INDLUCE_DIR} {PYBIND_INDLUCE_DIR} /usr/include/python3.7m /home/jackal/.local/include/python3.7m)
 add_test(test_squealer test_squealer)
 
 
