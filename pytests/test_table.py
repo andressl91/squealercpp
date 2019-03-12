@@ -28,7 +28,7 @@ def test_database():
     assert db.tables["COMPANY"].columns["NAME"] == "TEXT"
 
     # CHECK AT WE SUPPORT ALL BASIC TYPES (NOT BLOB YET)
-    feat = {"JIB": "TEXT", "JAB": "INT", "JOB": "FLOAT"}
+    feat = {"JIB": "TEXT", "JAB": "INT", "JOB": "REAL"}
     # Make sure we do not create new table woth flag
     db.create_table("COMPANY", feat, overwrite=False)
     assert db.tables["COMPANY"].columns["ID"] == "INT"
@@ -38,20 +38,20 @@ def test_database():
     db.create_table("COMPANY", feat, overwrite=True)
     assert db.tables["COMPANY"].columns["JIB"] == "TEXT"
     assert db.tables["COMPANY"].columns["JAB"] == "INT"
-    assert db.tables["COMPANY"].columns["JOB"] == "FLOAT"
+    assert db.tables["COMPANY"].columns["JOB"] == "REAL"
 
     table = db.tables["COMPANY"]
     
-    insert_data = [{"JIB": "JUDAS", "JAB": 2, "JOB": 4.4},
-                   {"JIB": "PRIEST", "JAB": 4, "JOB": 8.8}]
+    insert_data = [{"JIB": "JUDAS", "JAB": 2, "JOB": 4.41},
+                   {"JIB": "PRIEST", "JAB": 4, "JOB": 8.81}]
 
     #table.insert(insert_data)
     
     # WORKS
-    table.bulk_insert(insert_data)
+    # table.bulk_insert(insert_data)
     
     # WIP
-    #table.bulk_insert_v2(insert_data)
+    table.bulk_insert_v2(insert_data)
     
     # WORKS WITH ONLY ONE
     #table.bulk_insert_v2([insert_data[0]])

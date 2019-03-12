@@ -10,14 +10,6 @@ using string_map = std::map<std::string, std::string>;
 Table::Table() 
 {}
 
-Table::Table(std::string name) 
-    : table_name(name)
-{
-    
-}
-Table::Table(std::string name, string_map column_type) 
-    : table_name(name), columns(column_type)
-{}
 
 Table::Table(std::string name, string_map column_type, Connection *connection) 
     : table_name(name), columns(column_type), con(connection)
@@ -37,7 +29,6 @@ void Table::PreparedStatement(T values) {
         sql += itr->first + ",";
     }
     sql += itr->first + ") ";
-    
     sql += "VALUES (";
 
     int i = 1;
@@ -46,44 +37,37 @@ void Table::PreparedStatement(T values) {
         i++;
     }
     sql += "?" + std::to_string(i) + ")";
-
     prepared_stmt = sql;
-    //std::cout << prepared_stmt << std::endl;
-
     statement.prepare(con, prepared_stmt);
 
 }
 //PYTHON INSERT
 void Table::Insert(py_map * values) {
 
-    //PreparedStatement(values);
     int i = 1;
-
     py_map::iterator itr;
     for (itr = values->begin(); itr != values->end(); itr++){
         
         if (py::isinstance<py::str>(itr->second)) {
         const std::string o = py::cast<std::string>(itr->second);
-        statement.bind(&i, &o);
+        statement.bind(i, o);
         i++;
             }
         else if (py::isinstance<py::int_>(itr->second)) {
         const int o = py::cast<int>(itr->second);
-        statement.bind(&i, &o);
+        statement.bind(i, o);
         i++;
            }
         else if (py::isinstance<py::float_>(itr->second)) {
         const float o = py::cast<float>(itr->second);
-        statement.bind(&i, &o);
+        statement.bind(i, o);
         i++;
         }
-         //
         else{
             std::cout << "UNKNOWN TYPE \n";
         }       
     }
         statement.step();
-        
         //Reset Insert for next insert method call
         statement.reset();
 }
@@ -94,7 +78,7 @@ void Table::Insert(string_map values) {
     string_map::iterator itr;
     int i = 1;
     for (itr = values.begin(); itr != values.end(); itr++){
-        statement.bind(&i, &itr->second);
+        statement.bind(i, itr->second);
         i++;
     }
 
@@ -155,19 +139,17 @@ void Table::bulkInsert_v2(const py_map_vector * values){
             
             if (py::isinstance<py::str>(itr->second)) {
             const std::string o = py::cast<std::string>(itr->second);
-            statement.bind(&i, &o);
+            statement.bind(i, o);
             i++;
                 }
             else if (py::isinstance<py::float_>(itr->second)) {
             const float o = py::cast<float>(itr->second);
-            //std::cout << o + " FLOAT  \n";
-            statement.bind(&i, &o);
+            statement.bind(i, o);
             i++;
             }
             else if (py::isinstance<py::int_>(itr->second)) {
            const float o = py::cast<int>(itr->second);
-            //std::cout << o + " INT  \n";
-            statement.bind(&i, &o);
+            statement.bind(i, o);
             i++;
                }
             else{

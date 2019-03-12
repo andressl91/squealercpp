@@ -6,7 +6,7 @@ struct SqlType {
     public:
     const std::string NONE = "NONE";
     const std::string INTEGER = "INTEGER";
-    const std::string FLOAT = "FLOAT";
+    const std::string REAL = "REAL";
     const std::string TEXT = "TEXT";
     const std::string BLOB = "BLOB";
 

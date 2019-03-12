@@ -34,7 +34,7 @@ int main() {
     string_map inserts;
     //CHANGE TO INT FOR INSERT, MIGHT RESULT IN ERROR
     inserts["SEX"] = "1";
-    //inserts["PEOPLE"] = 2;
+    inserts["PEOPLE"] = "2";
     //inserts["NAME"] = "HEY";
     //inserts["BAG"] = "mybag";
 

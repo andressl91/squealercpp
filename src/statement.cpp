@@ -19,13 +19,13 @@ void Statement::prepare(Connection * con, std::string sql) {
 }
 
 
-void Statement::bind(int const * index, int const * value){
+void Statement::bind(int const   index, int const   value){
     
     
 
      auto const result = sqlite3_bind_int(insert_stmt,
-                                       *index,
-                                       *value);
+                                        index,
+                                        value);
 
   if (SQLITE_OK != result)
   {
@@ -34,13 +34,13 @@ void Statement::bind(int const * index, int const * value){
     
 }
 
-void Statement::bind(int const * index, float const * value){
+void Statement::bind(int const   index, float const   value){
     
     
 
      auto const result = sqlite3_bind_double(insert_stmt,
-                                       *index,
-                                       *value);
+                                        index,
+                                        value);
 
   if (SQLITE_OK != result)
   {
@@ -49,12 +49,12 @@ void Statement::bind(int const * index, float const * value){
     
 }
 
-void Statement::bind(int const * index, const std::string * value){
+void Statement::bind(int const   index, const std::string   value){
 
     auto const result = sqlite3_bind_text(insert_stmt,
-                                        *index,
-                                        value->c_str(),
-                                        value->length(),
+                                         index,
+                                        value.c_str(),
+                                        value.length(),
                                         SQLITE_STATIC);
 
 
