@@ -6,6 +6,7 @@
 namespace py = pybind11;
 using py_map = std::map<std::string, py::object>;
 using string_map = std::map<std::string, std::string>;
+using float_map = std::map<std::string, float>;
 
 Table::Table() 
 {}
@@ -23,6 +24,7 @@ string_map Table::Features(){
 
 template <typename T>
 void Table::PreparedStatement(T values) {
+    // Can basicly take any map, as long as key is string
     typename T::iterator itr;
     std::string sql = "INSERT INTO " + table_name + " (";
     for (itr = values.begin(); itr != --values.end(); itr++){
@@ -74,16 +76,67 @@ void Table::Insert(py_map * values) {
 
 //C++ Insert
 void Table::Insert(string_map values) {
-    PreparedStatement(values);
+    //PreparedStatement(values);
     string_map::iterator itr;
     int i = 1;
     for (itr = values.begin(); itr != values.end(); itr++){
+
         statement.bind(i, itr->second);
         i++;
     }
 
     statement.step();
+    statement.reset();
 }
+
+template <typename T>
+void Table::InsertV3(const T values) {
+    con->openDB();
+    //PreparedStatement(values);
+    typename T::iterator itr;
+    int i = 1;
+    std::cout << "HERE \n";
+    for (itr = values.begin(); itr != values.end(); itr++){
+        //statement.bind2(&i, &itr->second);
+        std::cout << i << " " << itr->second << std::endl;
+        statement.bind(i, itr->second);
+        i++;
+    }
+
+    statement.step();
+    statement.reset();
+  //  sqlite3_finalize(statement.insert_stmt);
+    con->closeDB();
+}
+//template
+//void Table::InsertV3(const std::map<std::string, std::string> values);
+
+
+//TODO: MAKE TEMPLATE WORK (AND PRIOR INSERT FIRST)
+template <typename T>
+void Table::InsertV2(std::map<std::string, T> values) {
+//void Table::InsertV2<T>(std::map<std::string, U> values) {
+    con->openDB();
+    //PreparedStatement(values);
+    typename std::map<std::string, T>::iterator itr;
+    int i = 1;
+    std::cout << "HERE \n";
+    for (itr = values.begin(); itr != values.end(); itr++){
+        //statement.bind2(&i, &itr->second);
+        std::cout << i << " " << itr->second << std::endl;
+        statement.bind(i, itr->second);
+        i++;
+    }
+
+    statement.step();
+    statement.reset();
+  //  sqlite3_finalize(statement.insert_stmt);
+    con->closeDB();
+}
+template void Table::InsertV2<int>(std::map<std::string, int> values);
+
+template void Table::InsertV2<float>(std::map<std::string, float> values);
+template void Table::InsertV2<std::string>(std::map<std::string, std::string> values);
 
 void Table::MultiPreparedStatement(const int n_inserts) {
     std::string sql = "INSERT INTO " + table_name + " (";
@@ -163,5 +216,6 @@ void Table::bulkInsert_v2(const py_map_vector * values){
     rc = sqlite3_exec(con->DB, "COMMIT TRANSACTION", NULL, NULL, &err_message);
     // include in statement class, with cleanup for new stmt
     sqlite3_finalize(statement.insert_stmt);
+    con->closeDB();
    
 }

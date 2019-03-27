@@ -11,7 +11,7 @@ BOOST_AUTO_TEST_CASE(sqltypes) {
     SqlType sqltype; 
     BOOST_CHECK(sqltype.NONE == "NONE");
     BOOST_CHECK(sqltype.INTEGER == "INTEGER");
-    BOOST_CHECK(sqltype.FLOAT == "FLOAT");
+    BOOST_CHECK(sqltype.REAL == "REAL");
     BOOST_CHECK(sqltype.TEXT == "TEXT");
     BOOST_CHECK(sqltype.BLOB == "BLOB");
 
@@ -64,9 +64,30 @@ BOOST_AUTO_TEST_CASE(TableOperations){
 }
 
 
+BOOST_AUTO_TEST_CASE(TableInsert){
+    string_map feat;
+    SqlType s_typ;
+        
+    std::string name = "createtable.db";
+    feat["ID"] = s_typ.INTEGER;
+    feat["NAME"] = s_typ.TEXT;
+    std::string table_n = "COMPANY";
 
-BOOST_AUTO_TEST_CASE(table) {
-    Table tabl = Table("test");
-    BOOST_CHECK_EQUAL(tabl.table_name, "test");
+    DataBase database(name);
+    database.createTable(table_n, feat);
+        
+    std::map<std::string, int> int_map;
+    int_map["ID"] = 1;
+    int_map["NAME"] = 2;
+
+    auto tbl_find = database.tables.find("COMPANY");
+
+    Table tbl = tbl_find->second;
+    tbl.InsertV2(int_map);
+    
+
+
+
 }
+
 
