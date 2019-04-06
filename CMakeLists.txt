@@ -16,21 +16,11 @@ set(SQLITE_INDLUCE_DIR /usr/include)
 # PYTHON FOR PYBIND11
 include_directories(include ${PYBIND_INDLUCE_DIR} /usr/include/python3.7m)
 add_library(squealer STATIC src/database.cpp src/connection.cpp src/table.cpp src/sqltypes.cpp src/statement.cpp)
-# Org
-# target_compile_options(squealer PUBLIC -Wall -fPIC -lsqlite3)
 target_compile_options(squealer PUBLIC -Wall -shared -fPIC -lsqlite3)
 
 
 add_executable(squeal src/main.cpp)
-# ORG
-# target_link_libraries(squeal squealer sqlite3)
-# Python is needed for uses of py:: namespace in code
 target_link_libraries(squeal squealer sqlite3 python3.7m)
-
-#target_include_directories(squeal PRIVATE {SQLITE_INDLUCE_DIR})
-# ORG
-#target_include_directories(squeal PRIVATE {SQLITE_INDLUCE_DIR} {PYBIND_INDLUCE_DIR})
-
 target_include_directories(squeal PRIVATE {SQLITE_INDLUCE_DIR} {PYBIND_INDLUCE_DIR} /usr/include/python3.7m /home/jackal/.local/include/python3.7m)
 
 # tests

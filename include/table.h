@@ -25,8 +25,6 @@ class Table {
     Statement multi_statement;
     
     Table();
-    Table(std::string name);
-    Table(std::string name, string_map column_type);
     Table(std::string name, string_map column_type, Connection *con);
     string_map Features();
 
@@ -36,8 +34,15 @@ class Table {
     //void PreparedStatement(string_map values);
     void Insert(py_map * values);
     void Insert(string_map  values);
+
+    template <typename U>
+    void InsertV2(std::map<std::string, U> values);
+    template <typename U>
+    void InsertV3(const U);
+
     void bulkInsert(const py_map_vector * values);
     void bulkInsert_v2(const py_map_vector * values);
+    void bulkInsert_v3(const py_map_vector * values);
 
 };
 

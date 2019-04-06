@@ -14,8 +14,14 @@ using py_map = std::map<std::string, py::object>;
 using py_map_vector = std::vector<py_map>;
 using string_map = std::map<std::string, std::string>;
 
+//PYBIND11_MAKE_OPAQUE(py_map)
+//PYBIND11_MAKE_OPAQUE(py_map_vector)
+
+
 PYBIND11_MODULE(sql_database, m) {
-//PYBIND11_MODULE(table, m) {                             
+    //py::bind_map<std::map<std::string, py::object>>(m, "MapStringObject")
+    //py::bind_vector<py_map_vector>(m "MapStringObjectVector")
+
      py::class_<Table>(m, "Table")
      .def(py::init<>())
      .def(py::init<std::string, string_map, Connection *>())
