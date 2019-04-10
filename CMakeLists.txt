@@ -15,7 +15,7 @@ set(SQLITE_INDLUCE_DIR /usr/include)
 
 # PYTHON FOR PYBIND11
 include_directories(include ${PYBIND_INDLUCE_DIR} /usr/include/python3.7m)
-add_library(squealer STATIC src/database.cpp src/connection.cpp src/table.cpp src/sqltypes.cpp src/statement.cpp)
+add_library(squealer STATIC src/database.cpp src/connection.cpp src/table.cpp src/sqltypes.cpp src/statement.cpp src/pybind_module.cpp)
 target_compile_options(squealer PUBLIC -Wall -shared -fPIC -lsqlite3)
 
 

@@ -76,18 +76,19 @@ BOOST_AUTO_TEST_CASE(TableInsert){
     DataBase database(name);
     database.createTable(table_n, feat);
         
-    std::map<std::string, int> int_map;
-    int_map["ID"] = 1;
-    int_map["NAME"] = 2;
+    std::map<std::string, std::string> int_map;
+    int_map["ID"] = "ROBOT";
+    int_map["NAME"] = "R2D2";
 
     auto tbl_find = database.tables.find("COMPANY");
 
     Table tbl = tbl_find->second;
-    tbl.InsertV2(int_map);
-    
+    tbl.Insert(int_map);
+ } 
 
 
 
-}
+
+
 
 

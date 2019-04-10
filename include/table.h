@@ -32,17 +32,12 @@ class Table {
     void PreparedStatement(T values);
     void MultiPreparedStatement(const int);
     //void PreparedStatement(string_map values);
-    void Insert(py_map * values);
     void Insert(string_map  values);
 
-    template <typename U>
-    void InsertV2(std::map<std::string, U> values);
-    template <typename U>
-    void InsertV3(const U);
+    template <typename T>
+    void InsertV3(const T values);
 
-    void bulkInsert(const py_map_vector * values);
-    void bulkInsert_v2(const py_map_vector * values);
-    void bulkInsert_v3(const py_map_vector * values);
+
 
 };
 
