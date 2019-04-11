@@ -1,7 +1,5 @@
 #ifndef TABLE
 #define TABLE
-#include "pybind11.h"
-#include "stl.h"
 #include <string>
 #include <map>
 #include "connection.h"
@@ -9,11 +7,13 @@
 #include "statement.h"
 #include <vector>
 
-
+/*
+#include "pybind11.h"
+#include "stl.h"
 namespace py = pybind11;
 using py_map = std::map<std::string, py::object>;
 using py_map_vector = std::vector<py_map>;
-
+*/
 using string_map = std::map<std::string, std::string>;
 class Table {
     public:
