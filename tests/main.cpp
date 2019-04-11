@@ -71,22 +71,45 @@ BOOST_AUTO_TEST_CASE(TableInsert){
     std::string name = "createtable.db";
     feat["ID"] = s_typ.INTEGER;
     feat["NAME"] = s_typ.TEXT;
-    std::string table_n = "COMPANY";
+    std::string table_n = "ROBOTS";
 
     DataBase database(name);
     database.createTable(table_n, feat);
         
-    std::map<std::string, std::string> int_map;
-    int_map["ID"] = "ROBOT";
-    int_map["NAME"] = "R2D2";
+    std::map<std::string, std::string> insert_map;
+    insert_map["ID"] = "ROBOT";
+    insert_map["NAME"] = "R2D2";
 
-    auto tbl_find = database.tables.find("COMPANY");
+    auto tbl_find = database.tables.find("ROBOTS");
 
     Table tbl = tbl_find->second;
-    tbl.Insert(int_map);
+    //tbl.Insert(insert_map);
+    tbl.InsertTemplate(insert_map);
  } 
 
 
+BOOST_AUTO_TEST_CASE(TableInsertInt){
+    string_map feat;
+    SqlType s_typ;
+        
+    std::string name = "createtable.db";
+    feat["ID"] = "REAL";
+    feat["NAME"] = "REAL";
+    std::string table_n = "SERIAL";
+
+    DataBase database(name);
+    database.createTable(table_n, feat);
+        
+    std::map<std::string, int> insert_map;
+    insert_map["ID"] = 3;
+    insert_map["NAME"] = 5;
+
+    auto tbl_find = database.tables.find("SERIAL");
+
+    Table tbl = tbl_find->second;
+    //tbl.Insert(insert_map);
+    tbl.InsertTemplate(insert_map);
+ } 
 
 
 

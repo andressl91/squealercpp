@@ -34,8 +34,10 @@ class Table {
     //void PreparedStatement(string_map values);
     void Insert(string_map  values);
 
-    template <typename T>
-    void InsertV3(const T values);
+    //void InsertTemplate(std::map<std::string, T>  values);
+    template <typename U>
+    void InsertTemplate(U values);
+
 
 
 

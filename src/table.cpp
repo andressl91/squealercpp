@@ -1,10 +1,6 @@
 #include "table.h"
-#include "pybind11.h"
-#include "stl.h"
 #include <iostream>
 
-namespace py = pybind11;
-using py_map = std::map<std::string, py::object>;
 using string_map = std::map<std::string, std::string>;
 using float_map = std::map<std::string, float>;
 
@@ -58,10 +54,14 @@ void Table::Insert(string_map values) {
     statement.step();
     statement.reset();
 }
-/*
-void Table::Insert(string_map values) {
+
+//void Table::InsertTemplate(std::map<std::string, T> values) {
+template <typename U>
+void Table::InsertTemplate(U values) {
     //PreparedStatement(values);
-    string_map::iterator itr;
+    //con->openDB();
+    //typename std::map<std::string, T>::iterator itr;
+    typename U::iterator itr;
     int i = 1;
     for (itr = values.begin(); itr != values.end(); itr++){
 
@@ -71,28 +71,17 @@ void Table::Insert(string_map values) {
 
     statement.step();
     statement.reset();
-} */
-
-template <typename T>
-void Table::InsertV3(const T values) {
-    con->openDB();
-    //PreparedStatement(values);
-    typename T::iterator itr;
-    int i = 1;
-    std::cout << "HERE \n";
-    for (itr = values.begin(); itr != values.end(); itr++){
-        //statement.bind2(&i, &itr->second);
-        std::cout << i << " " << itr->second << std::endl;
-        statement.bind(i, itr->second);
-        i++;
-    }
-
-    statement.step();
-    statement.reset();
-  //  sqlite3_finalize(statement.insert_stmt);
-    con->closeDB();
+    //con->closeDB();
 }
 
+// Must define each template type which should be supported
+template void Table::InsertTemplate<std::map<std::string, std::string>>
+(std::map<std::string, std::string>);
+template void Table::InsertTemplate<std::map<std::string, int>>
+(std::map<std::string, int>);
+template void Table::InsertTemplate<std::map<std::string, float>>
+(std::map<std::string, float>);
+// TODO: Try string, int :O
 
 void Table::MultiPreparedStatement(const int n_inserts) {
     std::string sql = "INSERT INTO " + table_name + " (";
